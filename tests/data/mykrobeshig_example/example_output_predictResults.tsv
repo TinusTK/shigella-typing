@@ -1,0 +1,3 @@
+genome	species	final genotype	name	scheme	confidence	num QRDR	parC_S80I	gyrA_S83L	gyrA_S83A	gyrA_D87G	gyrA_D87N	gyrA_D87Y	phylogroup_coverage	species_coverage	lowest support for genotype marker	poorly supported markers	max support for additional markers	additional markers	node support
+ERR047239	S. flexneri	2.1.2.7	-	flexneri	strong	1	0	1	0	0	0	0	95.425	88.23					2 (1; 78/0); 2.1 (1; 96/0); 2.1.2 (1; 109/0); 2.1.2.7 (1; 115/0)
+SRR7223147	S. flexneri	1.2.2.5.6	-	flexneri	strong	0	0	0	0	0	0	0	97.505	88.463					1 (1; 72/0); 1.2 (1; 35/0); 1.2.2 (1; 58/0); 1.2.2.5 (1; 64/0); 1.2.2.5.6 (1; 47/0)

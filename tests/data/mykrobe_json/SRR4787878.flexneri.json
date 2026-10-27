@@ -1,0 +1,52 @@
+{
+    "SRR4787878": {
+        "susceptibility": {
+            "ciprofloxacin": {
+                "predict": "S"
+            }
+        },
+        "phylogenetics": {
+            "phylo_group": {
+                "Ecoli_Shigella": {
+                    "percent_coverage": 83.66,
+                    "median_depth": 22
+                }
+            },
+            "sub_complex": {
+                "Unknown": {
+                    "percent_coverage": -1,
+                    "median_depth": -1
+                }
+            },
+            "species": {
+                "Shigella_flexneri": {
+                    "percent_coverage": 85.048,
+                    "median_depth": 18
+                }
+            },
+            "lineage": {
+                "Unknown": {
+                    "percent_coverage": -1,
+                    "median_depth": -1
+                }
+            }
+        },
+        "kmer": 21,
+        "probe_sets": [
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/flexneri/shigella.probe.uidA.20240308.fa.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/flexneri/flexneri.mlst.20240308.fa.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/flexneri/flexneri.lineage.20241210.probes.fa.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/flexneri/flexneri.amr.20250902.probes.fa.gz"
+        ],
+        "files": [
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/reads/SRR4787878_1.fastq.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/reads/SRR4787878_2.fastq.gz"
+        ],
+        "version": {
+            "mykrobe-predictor": "v0.13.0",
+            "mykrobe-atlas": "v0.13.0",
+            "panel": "20250902/20250902"
+        },
+        "genotype_model": "kmer_count"
+    }
+}

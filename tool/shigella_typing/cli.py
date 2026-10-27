@@ -15,7 +15,7 @@ Standard library only; ShigaPass, Mykrobe and BLAST+ are called as programs.
 import argparse
 import sys
 
-from shigella_typing import __version__, shigapass_tool
+from shigella_typing import __version__, mykrobe_tool, shigapass_tool
 
 SUBCOMMANDS = {
     "shigapass": "ShigaPass typing of assemblies",
@@ -27,6 +27,7 @@ SUBCOMMANDS = {
 # Subcommands that are implemented: name -> module with add_arguments/main.
 IMPLEMENTED = {
     "shigapass": shigapass_tool,
+    "mykrobe": mykrobe_tool,
 }
 
 

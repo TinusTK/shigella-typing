@@ -1,0 +1,48 @@
+{
+    "SRR5306599": {
+        "susceptibility": {},
+        "phylogenetics": {
+            "phylo_group": {
+                "Unknown": {
+                    "percent_coverage": -1,
+                    "median_depth": -1
+                }
+            },
+            "sub_complex": {
+                "Unknown": {
+                    "percent_coverage": -1,
+                    "median_depth": -1
+                }
+            },
+            "species": {
+                "Unknown": {
+                    "percent_coverage": -1,
+                    "median_depth": -1
+                }
+            },
+            "lineage": {
+                "Unknown": {
+                    "percent_coverage": -1,
+                    "median_depth": -1
+                }
+            }
+        },
+        "kmer": 21,
+        "probe_sets": [
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/sonnei/sonnei.lineage.20210201.probes.fa.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/sonnei/sonnei.mlst.20201010.sonnei.fa.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/sonnei/sonnei.probe.uidA.20201010.fa.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/panels/panels_dir/sonnei/sonnei.qrdr.20201010.probes.fa.gz"
+        ],
+        "files": [
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/reads/SRR5306599_1.fastq.gz",
+            "/Users/tk/Documents/Claude/Projects/ShigellaTyping/validation/data/reads/SRR5306599_2.fastq.gz"
+        ],
+        "version": {
+            "mykrobe-predictor": "v0.13.0",
+            "mykrobe-atlas": "v0.13.0",
+            "panel": "20210201/20210201"
+        },
+        "genotype_model": "kmer_count"
+    }
+}

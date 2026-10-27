@@ -45,7 +45,7 @@ environment.yml          conda environment for standalone use
 ```
 conda env create -f environment.yml
 conda activate shigella-typing
-pip install .
+pip install -e .        # from a clone, so the bundled panels/ are found
 shigella-typing --version
 ```
 
@@ -66,6 +66,27 @@ own fields (`rfb`, `rfb_hits`, `rfb_pct`, `mlst_st`, `fliC`, `crispr`,
 `ShigaPass_Flex_summary.csv` (sample names restored).
 
 On macOS ShigaPass needs the GNU tools in `environment.yml`.
+
+### Mykrobe Shigella genotyping (reads)
+
+```
+shigella-typing mykrobe --reads S1_R1.fastq.gz S1_R2.fastq.gz --sample S1 --outdir out/ \
+    [--scheme auto|sonnei|flexneri] [--ont] [--threads 4] [--raw-outputs json predictresults]
+```
+
+One sample per run (paired, single-end, or `--ont`). Writes
+`out/mykrobe_report.tsv` (one row, always). `auto` runs both schemes and
+keeps the one whose species coverage reaches the mykrobeshig threshold
+(*S. sonnei* 90, *S. flexneri* 85.5); otherwise `none matched` with
+Mykrobe's species call (`Unknown E. coli/Shigella` or `Not E. coli/Shigella`).
+QRDR mutations (`qrdr_mutations`, `num_qrdr`) are genotypic markers;
+`cipro_prediction` is `no QRDR mutations`, `QRDR mutation(s): reduced
+susceptibility likely` (1-2) or `QRDR triple mutant: resistance likely` (3+),
+and is not a replacement for AST. A warning is added when species coverage
+is within 1 point of a threshold.
+
+Uses the bundled `panels/` (install with `pip install -e .` from a clone, or
+point `--panels-dir` / `SHIGELLA_TYPING_PANELS` at them). Never downloads.
 
 ## Software and data used
 
