@@ -2,7 +2,7 @@
 
 ## Test data
 
-`tool/test-data/` (20 MB, public data only) is made from the full-size
+`tool/test-data/` (about 18 MB, public data only) is made from the full-size
 public data by `validation/make_test_data.sh`. Accessions and expected
 results are in `tool/test-data/README.md`.
 

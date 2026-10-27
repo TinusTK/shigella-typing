@@ -1,0 +1,42 @@
+class: GalaxyWorkflow
+label: Shigella typing (one step)
+doc: |
+  ShigaPass typing with "Also run Mykrobe genotyping" on: one step gives the
+  ShigaPass, Mykrobe and combined reports, the same as the three-tool
+  workflow. Assemble the reads with your own assembler (e.g. Shovill mapped
+  over the reads collection) so the assemblies keep the reads' element
+  names; samples are matched by name.
+creator:
+  - class: Person
+    name: TinusTK
+license: GPL-3.0-or-later
+release: "0.1.0"
+inputs:
+  reads:
+    type: collection
+    collection_type: list:paired
+    doc: Paired reads, one element per sample (fastqsanger or fastqsanger.gz).
+  assemblies:
+    type: collection
+    collection_type: list
+    doc: Assemblies (FASTA), one element per sample, same element names as the reads.
+outputs:
+  combined_report:
+    outputSource: shigapass/combined
+  shigapass_report:
+    outputSource: shigapass/report
+  mykrobe_report:
+    outputSource: shigapass/mykrobe_report
+steps:
+  shigapass:
+    doc: ShigaPass typing with Also run Mykrobe genotyping on - ShigaPass, Mykrobe and combined reports in one step.
+    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigapass_typing/0.1.0+galaxy0
+    tool_version: 0.1.0+galaxy0
+    in:
+      assemblies: assemblies
+      mykrobe|reads|input: reads
+    state:
+      mykrobe:
+        run: "yes"
+        reads:
+          type: paired

@@ -1,0 +1,2 @@
+sample	mykrobe_scheme	mykrobe_species_call	genotype	genotype_name	genotype_confidence	qrdr_mutations	num_qrdr	cipro_prediction	species_coverage	lowest_support_genotype_marker	poorly_supported_markers	additional_markers	warnings	mykrobe_version	mykrobe_panel_version	tool_version
+SWAP	flexneri	S. flexneri	1.2.2.5.3	-	strong	none	0	no QRDR mutations	88.459	-	-	-		0.13.0	20250902	0.1.0

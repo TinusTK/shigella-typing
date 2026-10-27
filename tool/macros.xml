@@ -1,0 +1,126 @@
+<macros>
+    <!-- Versions must match upstream_versions.yml and environment.yml -->
+    <token name="@TOOL_VERSION@">0.1.0</token>
+    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@PROFILE@">23.0</token>
+    <token name="@SHIGAPASS_VERSION@">1.5.0</token>
+    <token name="@MYKROBE_VERSION@">0.13.0</token>
+    <token name="@BLAST_VERSION@">2.17.0</token>
+    <!-- Mykrobe 0.13.0 imports pkg_resources, which setuptools 81+ removed -->
+    <token name="@SETUPTOOLS_VERSION@">80.10.2</token>
+    <token name="@PYTHON_VERSION@">3.12</token>
+
+    <!-- The tool directory holds the shigella_typing package and the
+         bundled Mykrobe panels (scripts/bundle_tool.sh). -->
+    <token name="@CLI@">PYTHONPATH='$__tool_directory__' python -m shigella_typing.cli</token>
+    <token name="@PANELS@">--panels-dir '$__tool_directory__/panels'</token>
+
+    <xml name="requirements_python">
+        <requirement type="package" version="@PYTHON_VERSION@">python</requirement>
+    </xml>
+    <xml name="requirements_mykrobe">
+        <requirement type="package" version="@MYKROBE_VERSION@">mykrobe</requirement>
+        <requirement type="package" version="@SETUPTOOLS_VERSION@">setuptools</requirement>
+        <requirement type="package" version="@PYTHON_VERSION@">python</requirement>
+    </xml>
+    <xml name="requirements_shigapass">
+        <requirement type="package" version="@SHIGAPASS_VERSION@">shigapass</requirement>
+        <requirement type="package" version="@BLAST_VERSION@">blast</requirement>
+        <requirement type="package" version="@MYKROBE_VERSION@">mykrobe</requirement>
+        <requirement type="package" version="@SETUPTOOLS_VERSION@">setuptools</requirement>
+        <requirement type="package" version="@PYTHON_VERSION@">python</requirement>
+    </xml>
+
+    <xml name="version_command">
+        <version_command>@CLI@ --version</version_command>
+    </xml>
+
+    <!-- Reads input for tool 2 (one sample, mapped over collections) -->
+    <xml name="reads_input">
+        <conditional name="reads">
+            <param name="type" type="select" label="Reads">
+                <option value="paired" selected="true">Paired-end (paired collection)</option>
+                <option value="single">Single-end</option>
+                <option value="ont">Oxford Nanopore</option>
+            </param>
+            <when value="paired">
+                <param name="input" type="data_collection" collection_type="paired"
+                       format="fastqsanger,fastqsanger.gz" label="Paired reads"
+                       help="Run on a list:paired collection to type many samples; sample names are the collection element names."/>
+            </when>
+            <when value="single">
+                <param name="input" type="data" format="fastqsanger,fastqsanger.gz" label="Single-end reads"/>
+            </when>
+            <when value="ont">
+                <param name="input" type="data" format="fastqsanger,fastqsanger.gz" label="Nanopore reads"/>
+            </when>
+        </conditional>
+    </xml>
+
+    <!-- Reads collections for tool 1's toggle (all samples at once) -->
+    <xml name="reads_collection_input">
+        <conditional name="reads">
+            <param name="type" type="select" label="Reads">
+                <option value="paired" selected="true">Paired-end (list:paired collection)</option>
+                <option value="single">Single-end (list collection)</option>
+                <option value="ont">Oxford Nanopore (list collection)</option>
+            </param>
+            <when value="paired">
+                <param name="input" type="data_collection" collection_type="list:paired"
+                       format="fastqsanger,fastqsanger.gz" label="Paired reads"
+                       help="Element names must match the assembly names."/>
+            </when>
+            <when value="single">
+                <param name="input" type="data_collection" collection_type="list"
+                       format="fastqsanger,fastqsanger.gz" label="Single-end reads"
+                       help="Element names must match the assembly names."/>
+            </when>
+            <when value="ont">
+                <param name="input" type="data_collection" collection_type="list"
+                       format="fastqsanger,fastqsanger.gz" label="Nanopore reads"
+                       help="Element names must match the assembly names."/>
+            </when>
+        </conditional>
+    </xml>
+
+    <xml name="citations_shigapass">
+        <citation type="doi">10.1099/mgen.0.000961</citation>
+        <citation type="doi">10.1186/1471-2105-10-421</citation>
+    </xml>
+    <xml name="citations_mykrobe">
+        <citation type="doi">10.12688/wellcomeopenres.15603.1</citation>
+        <citation type="doi">10.1038/s41467-021-22700-4</citation>
+        <citation type="doi">10.64898/2026.04.17.719127</citation>
+    </xml>
+    <xml name="citations_all">
+        <citations>
+            <expand macro="citations_shigapass"/>
+            <expand macro="citations_mykrobe"/>
+        </citations>
+    </xml>
+
+    <token name="@HELP_QRDR@"><![CDATA[
+**QRDR mutations are genotypic markers, not a replacement for antimicrobial
+susceptibility testing (AST).** ``cipro_prediction`` is ``no QRDR mutations``,
+``QRDR mutation(s): reduced susceptibility likely`` (1-2 mutations) or
+``QRDR triple mutant: resistance likely`` (3 or more).
+]]></token>
+    <token name="@HELP_SCOPE@"><![CDATA[
+These tools are for *Shigella* only. Mykrobe genotyping covers *S. sonnei*
+(Sonneityping) and *S. flexneri* (Flex-It) only; *S. boydii*, *S. dysenteriae*,
+*S. flexneri* serotype 6 and EIEC get a serotype from ShigaPass but no genotype.
+For *M. tuberculosis* use TB-Profiler; for other Mykrobe species use the
+``mykrobe_predict`` tool.
+]]></token>
+    <token name="@HELP_CREDITS@"><![CDATA[
+**Software and data**
+
+ShigaPass @SHIGAPASS_VERSION@ (Yassine *et al.* 2023), BLAST+ (Camacho *et al.*
+2009), Mykrobe @MYKROBE_VERSION@ (Hunt *et al.* 2019), Mykrobe panels for
+*S. sonnei* 20210201 (Sonneityping, Hawkey *et al.* 2021) and *S. flexneri*
+20250902 (Flex-It, Hawkey *et al.* 2026) from Mykrobe-tools/mykrobe-data
+(MIT, bundled, never downloaded), and mykrobeshig (ShigellaGenomics, GPL-3.0,
+adapted from katholt/sonneityping; vendored unchanged). Wrapper source:
+https://github.com/TinusTK/shigella-typing
+]]></token>
+</macros>

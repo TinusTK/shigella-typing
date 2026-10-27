@@ -1,0 +1,191 @@
+<tool id="mykrobe_shigella" name="Mykrobe Shigella genotyping" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+    <description>S. sonnei / S. flexneri genotype and QRDR mutations from reads</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <requirements>
+        <expand macro="requirements_mykrobe"/>
+    </requirements>
+    <expand macro="version_command"/>
+    <command detect_errors="exit_code"><![CDATA[
+#import re
+#if $reads.type == 'paired'
+    #set $name = re.sub(r'[^ \w\-.]', '_', str($reads.input.name))
+#else
+    #set $name = re.sub(r'[^ \w\-.]', '_', str($reads.input.element_identifier))
+#end if
+@CLI@ mykrobe
+    #if $reads.type == 'paired'
+        --reads '$reads.input.forward' '$reads.input.reverse'
+    #else
+        --reads '$reads.input'
+    #end if
+    #if $reads.type == 'ont'
+        --ont
+    #end if
+    --sample '$name'
+    --scheme '$scheme'
+    --threads \${GALAXY_SLOTS:-2}
+    #if $raw_outputs
+        --raw-outputs ${str($raw_outputs).replace(',', ' ')}
+    #end if
+    @PANELS@
+    --outdir out
+    ]]></command>
+    <inputs>
+        <expand macro="reads_input"/>
+        <param name="scheme" type="select" label="Genotyping scheme">
+            <option value="auto" selected="true">auto: run both, keep the one that matches</option>
+            <option value="sonnei">S. sonnei (Sonneityping)</option>
+            <option value="flexneri">S. flexneri (Flex-It)</option>
+        </param>
+        <param name="raw_outputs" type="select" display="checkboxes" multiple="true" optional="true"
+               label="Also output the tools' own files">
+            <option value="json">Mykrobe JSON (one per scheme run)</option>
+            <option value="predictresults">mykrobeshig predictResults.tsv</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="report" format="tabular" from_work_dir="out/mykrobe_report.tsv"
+              label="${tool.name} on ${on_string}: report"/>
+        <collection name="json" type="list" label="${tool.name} on ${on_string}: Mykrobe JSON">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.json" directory="out" format="json"/>
+            <filter>raw_outputs and 'json' in raw_outputs</filter>
+        </collection>
+        <data name="predictresults" format="tabular" from_work_dir="out/mykrobeshig_predictResults.tsv"
+              label="${tool.name} on ${on_string}: mykrobeshig predictResults">
+            <filter>raw_outputs and 'predictresults' in raw_outputs</filter>
+        </data>
+    </outputs>
+    <tests>
+        <!-- Paired reads, auto scheme: S. sonnei triple QRDR mutant -->
+        <test expect_num_outputs="1">
+            <conditional name="reads">
+                <param name="type" value="paired"/>
+                <param name="input">
+                    <collection type="paired" name="SRR8117834">
+                        <element name="forward" value="SRR8117834_1.fastq.gz" ftype="fastqsanger.gz"/>
+                        <element name="reverse" value="SRR8117834_2.fastq.gz" ftype="fastqsanger.gz"/>
+                    </collection>
+                </param>
+            </conditional>
+            <output name="report">
+                <assert_contents>
+                    <has_n_columns n="17"/>
+                    <has_line_matching expression="^SRR8117834\tsonnei\tS\. sonnei\t3\.6\.1\.1\.2\tCipR\.MSM5\tstrong\tgyrA_D87G;gyrA_S83L;parC_S80I\t3\tQRDR triple mutant: resistance likely\t95\.214\t.*"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Paired reads, S. flexneri with one QRDR mutation, raw outputs -->
+        <test expect_num_outputs="3">
+            <conditional name="reads">
+                <param name="type" value="paired"/>
+                <param name="input">
+                    <collection type="paired" name="ERR047239">
+                        <element name="forward" value="ERR047239_1.fastq.gz" ftype="fastqsanger.gz"/>
+                        <element name="reverse" value="ERR047239_2.fastq.gz" ftype="fastqsanger.gz"/>
+                    </collection>
+                </param>
+            </conditional>
+            <param name="raw_outputs" value="json,predictresults"/>
+            <output name="report">
+                <assert_contents>
+                    <has_line_matching expression="^ERR047239\tflexneri\tS\. flexneri\t2\.1\.2\.7\t.*\tgyrA_S83L\t1\tQRDR mutation\(s\): reduced susceptibility likely\t.*"/>
+                </assert_contents>
+            </output>
+            <output_collection name="json" type="list" count="2">
+                <element name="ERR047239.flexneri" ftype="json">
+                    <assert_contents><has_text text="gyrA_S83L"/></assert_contents>
+                </element>
+                <element name="ERR047239.sonnei" ftype="json">
+                    <assert_contents><has_text text="&quot;ERR047239&quot;"/></assert_contents>
+                </element>
+            </output_collection>
+            <output name="predictresults">
+                <assert_contents>
+                    <has_text text="2.1.2.7"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Single-end reads, manual scheme -->
+        <test expect_num_outputs="1">
+            <conditional name="reads">
+                <param name="type" value="single"/>
+                <param name="input" value="SRR8117834_1.fastq.gz" ftype="fastqsanger.gz"/>
+            </conditional>
+            <param name="scheme" value="sonnei"/>
+            <output name="report">
+                <assert_contents>
+                    <has_line_matching expression="^SRR8117834_1\.fastq\.gz\tsonnei\tS\. sonnei\t3\.6\.1\.1\.2\t.*"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Oxford Nanopore reads -->
+        <test expect_num_outputs="1">
+            <conditional name="reads">
+                <param name="type" value="ont"/>
+                <param name="input" value="SRR22313045.fastq.gz" ftype="fastqsanger.gz"/>
+            </conditional>
+            <output name="report">
+                <assert_contents>
+                    <has_line_matching expression="^SRR22313045\.fastq\.gz\tsonnei\tS\. sonnei\t.*"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Not Shigella: no scheme matches -->
+        <test expect_num_outputs="1">
+            <conditional name="reads">
+                <param name="type" value="paired"/>
+                <param name="input">
+                    <collection type="paired" name="SRR5306599">
+                        <element name="forward" value="SRR5306599_1.fastq.gz" ftype="fastqsanger.gz"/>
+                        <element name="reverse" value="SRR5306599_2.fastq.gz" ftype="fastqsanger.gz"/>
+                    </collection>
+                </param>
+            </conditional>
+            <output name="report">
+                <assert_contents>
+                    <has_line_matching expression="^SRR5306599\tnone matched\tNot E\. coli/Shigella\t-\t.*\tNot S\. sonnei/S\. flexneri\t.*"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+Assigns a *Shigella sonnei* (Sonneityping) or *S. flexneri* (Flex-It)
+genotype and finds ciprofloxacin-resistance (QRDR) mutations in *gyrA* and
+*parC*, using Mykrobe on the reads of one sample. Run it on a list:paired
+collection to type many samples; each sample is named after its collection
+element.
+
+**Schemes**
+
+- ``auto`` (default) runs both schemes and keeps the one whose species
+  coverage reaches the mykrobeshig threshold (*S. sonnei* 90, *S. flexneri*
+  85.5). If neither does, the scheme is ``none matched`` and Mykrobe's species
+  call (``Unknown E. coli/Shigella`` or ``Not E. coli/Shigella``) is reported.
+- ``sonnei`` / ``flexneri`` run one scheme only.
+
+A warning is added when species coverage is within 1 point of a threshold.
+
+@HELP_QRDR@
+
+**Output columns**
+
+sample, mykrobe_scheme, mykrobe_species_call, genotype, genotype_name,
+genotype_confidence, qrdr_mutations, num_qrdr, cipro_prediction,
+species_coverage, lowest_support_genotype_marker, poorly_supported_markers,
+additional_markers,
+warnings, mykrobe_version, mykrobe_panel_version, tool_version.
+
+@HELP_SCOPE@
+
+The Mykrobe panels are bundled with the tool and never downloaded.
+
+@HELP_CREDITS@
+    ]]></help>
+    <citations>
+        <expand macro="citations_mykrobe"/>
+    </citations>
+</tool>

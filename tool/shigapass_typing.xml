@@ -1,0 +1,215 @@
+<tool id="shigapass_typing" name="ShigaPass typing" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+    <description>Shigella / EIEC species and serotype from assemblies</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <requirements>
+        <expand macro="requirements_shigapass"/>
+    </requirements>
+    <expand macro="version_command"/>
+    <command detect_errors="exit_code"><![CDATA[
+#import re
+@CLI@ shigapass
+    --assembly
+    #for $a in $assemblies
+        '$a'
+    #end for
+    --name
+    #for $a in $assemblies
+        '${re.sub(r"[^ \w\-.]", "_", str($a.element_identifier))}'
+    #end for
+    --threads \${GALAXY_SLOTS:-2}
+    #set $raw = [o for o in str($raw_outputs).split(',') if o and o != 'None']
+    #if $mykrobe.run == 'yes'
+        --with-mykrobe --reads-samplesheet '$reads_sheet'
+        #if $mykrobe.reads.type == 'ont'
+            --ont
+        #end if
+        #set $raw = $raw + [o for o in str($mykrobe.raw_outputs).split(',') if o and o != 'None']
+        @PANELS@
+    #end if
+    #if $raw
+        --raw-outputs ${' '.join($raw)}
+    #end if
+    --outdir out
+    ]]></command>
+    <configfiles>
+        <configfile name="reads_sheet"><![CDATA[#import re
+#if $mykrobe.run == 'yes'
+sample	r1	r2
+#for $key in $mykrobe.reads.input.keys()
+#set $name = re.sub(r"[^ \w\-.]", "_", str($key))
+#if $mykrobe.reads.type == 'paired'
+${name}	${mykrobe.reads.input[$key].forward}	${mykrobe.reads.input[$key].reverse}
+#else
+${name}	${mykrobe.reads.input[$key]}
+#end if
+#end for
+#end if
+]]></configfile>
+    </configfiles>
+    <inputs>
+        <param name="assemblies" type="data" format="fasta,fasta.gz" multiple="true"
+               label="Assemblies"
+               help="One or more assemblies, or a collection. Sample names are the dataset / collection element names."/>
+        <param name="raw_outputs" type="select" display="checkboxes" multiple="true" optional="true"
+               label="Also output ShigaPass's own files">
+            <option value="summary">ShigaPass_summary.csv</option>
+            <option value="flex_summary">ShigaPass_Flex_summary.csv</option>
+        </param>
+        <conditional name="mykrobe">
+            <param name="run" type="select" label="Also run Mykrobe genotyping (needs reads)"
+                   help="Adds Mykrobe genotyping and QRDR calls on the reads and writes the combined report, the same as running Mykrobe Shigella genotyping and Combine Shigella report.">
+                <option value="no" selected="true">No</option>
+                <option value="yes">Yes</option>
+            </param>
+            <when value="no"/>
+            <when value="yes">
+                <expand macro="reads_collection_input"/>
+                <param name="raw_outputs" type="select" display="checkboxes" multiple="true" optional="true"
+                       label="Also output Mykrobe's own files">
+                    <option value="json">Mykrobe JSON (one per sample and scheme)</option>
+                    <option value="predictresults">mykrobeshig predictResults.tsv</option>
+                </param>
+            </when>
+        </conditional>
+    </inputs>
+    <outputs>
+        <data name="combined" format="tabular" from_work_dir="out/shigella_typing_report.tsv"
+              label="${tool.name} on ${on_string}: combined report">
+            <filter>mykrobe['run'] == 'yes'</filter>
+        </data>
+        <data name="report" format="tabular" from_work_dir="out/shigapass_report.tsv"
+              label="${tool.name} on ${on_string}: ShigaPass report"/>
+        <data name="mykrobe_report" format="tabular" from_work_dir="out/mykrobe_report.tsv"
+              label="${tool.name} on ${on_string}: Mykrobe report">
+            <filter>mykrobe['run'] == 'yes'</filter>
+        </data>
+        <data name="summary" format="txt" from_work_dir="out/ShigaPass_summary.csv"
+              label="${tool.name} on ${on_string}: ShigaPass_summary.csv">
+            <filter>raw_outputs and 'summary' in raw_outputs</filter>
+        </data>
+        <data name="flex_summary" format="txt" from_work_dir="out/ShigaPass_Flex_summary.csv"
+              label="${tool.name} on ${on_string}: ShigaPass_Flex_summary.csv">
+            <filter>raw_outputs and 'flex_summary' in raw_outputs</filter>
+        </data>
+        <collection name="json" type="list" label="${tool.name} on ${on_string}: Mykrobe JSON">
+            <discover_datasets pattern="(?P&lt;designation&gt;.+)\.json" directory="out" format="json"/>
+            <filter>mykrobe['run'] == 'yes' and mykrobe['raw_outputs'] and 'json' in mykrobe['raw_outputs']</filter>
+        </collection>
+        <data name="predictresults" format="tabular" from_work_dir="out/mykrobeshig_predictResults.tsv"
+              label="${tool.name} on ${on_string}: mykrobeshig predictResults">
+            <filter>mykrobe['run'] == 'yes' and mykrobe['raw_outputs'] and 'predictresults' in mykrobe['raw_outputs']</filter>
+        </data>
+    </outputs>
+    <tests>
+        <!-- Toggle off: four ShigaPass example genomes, raw outputs -->
+        <test expect_num_outputs="3">
+            <param name="assemblies" value="ERR5976293.fasta.gz,ERR5952732.fasta.gz,ERR5888634.fasta.gz,ERR5982186.fasta.gz" ftype="fasta.gz"/>
+            <param name="raw_outputs" value="summary,flex_summary"/>
+            <output name="report">
+                <assert_contents>
+                    <has_n_columns n="16"/>
+                    <has_n_lines n="5"/>
+                    <has_line_matching expression="^ERR5976293\.fasta\.gz\tD\t202\t70\.6%\tST152\t.*\tSS\t-\t\tS\. sonnei\t-\t\t1\.5\.0\t0\.1\.0$"/>
+                    <has_line_matching expression="^ERR5952732\.fasta\.gz\tB1-5\t.*\tSF1-5\t1b\t\tS\. flexneri\tS\. flexneri 1b\t.*"/>
+                    <has_line_matching expression="^ERR5888634\.fasta\.gz\t.*\tSB2\t-\t\tS\. boydii\tS\. boydii 2\t.*"/>
+                    <has_line_matching expression="^ERR5982186\.fasta\.gz\t.*\tSD2\t-\t\tS\. dysenteriae\tS\. dysenteriae 2\t.*"/>
+                </assert_contents>
+            </output>
+            <output name="summary">
+                <assert_contents>
+                    <has_text text="ERR5952732.fasta.gz;B1-5;"/>
+                </assert_contents>
+            </output>
+            <output name="flex_summary">
+                <assert_contents>
+                    <has_text text="ERR5952732.fasta.gz"/>
+                </assert_contents>
+            </output>
+        </test>
+        <!-- Toggle on: a matching sample (S. flexneri), a discordant sample
+             (S. sonnei assembly with S. flexneri reads) and a sample without
+             reads. Sample names are the dataset names, so the reads
+             collection elements carry the assembly file names. -->
+        <test expect_num_outputs="3">
+            <param name="assemblies" value="ERR5952732.fasta.gz,ERR5976293.fasta.gz,ERR5888634.fasta.gz" ftype="fasta.gz"/>
+            <conditional name="mykrobe">
+                <param name="run" value="yes"/>
+                <conditional name="reads">
+                    <param name="type" value="paired"/>
+                    <param name="input">
+                        <collection type="list:paired">
+                            <element name="ERR5952732.fasta.gz">
+                                <collection type="paired">
+                                    <element name="forward" value="ERR5952732_1.fastq.gz" ftype="fastqsanger.gz"/>
+                                    <element name="reverse" value="ERR5952732_2.fastq.gz" ftype="fastqsanger.gz"/>
+                                </collection>
+                            </element>
+                            <element name="ERR5976293.fasta.gz">
+                                <collection type="paired">
+                                    <element name="forward" value="ERR5952732_1.fastq.gz" ftype="fastqsanger.gz"/>
+                                    <element name="reverse" value="ERR5952732_2.fastq.gz" ftype="fastqsanger.gz"/>
+                                </collection>
+                            </element>
+                        </collection>
+                    </param>
+                </conditional>
+            </conditional>
+            <output name="combined">
+                <assert_contents>
+                    <has_n_columns n="30"/>
+                    <has_n_lines n="4"/>
+                    <has_line_matching expression="^ERR5952732\.fasta\.gz\t.*\tSF1-5\t1b\t.*\tflexneri\tS\. flexneri\t1\.2\.2\.5\.3\t.*\t\t1\.5\.0\t0\.13\.0\t20250902\t0\.1\.0$"/>
+                    <has_line_matching expression="^ERR5976293\.fasta\.gz\t.*\tSS\t.*\tflexneri\t.*\tDiscordant: ShigaPass S\. sonnei, Mykrobe S\. flexneri - check\t.*"/>
+                    <has_line_matching expression="^ERR5888634\.fasta\.gz\t.*\tSB2\t.*\tMykrobe not run: missing reads\t.*"/>
+                </assert_contents>
+            </output>
+            <output name="report">
+                <assert_contents>
+                    <has_n_lines n="4"/>
+                </assert_contents>
+            </output>
+            <output name="mykrobe_report">
+                <assert_contents>
+                    <has_n_columns n="17"/>
+                    <has_line_matching expression="^ERR5976293\.fasta\.gz\tflexneri\t.*"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+Runs ShigaPass on assemblies to tell whether each isolate is *Shigella*,
+EIEC or neither, and predicts its serotype. One row per assembly, always:
+if ShigaPass fails on one, the reason is in ``warnings``.
+
+**Also run Mykrobe genotyping (optional)**
+
+Set this to *Yes* and give the reads collection to also get the Mykrobe
+genotype and QRDR calls and the **combined report** with cross-check
+warnings, the same as running *Mykrobe Shigella genotyping* and *Combine
+Shigella report* separately. Assemblies and reads are matched by element
+name; a sample with only one of them still gets a row. Mykrobe tries the
+scheme matching the ShigaPass call first and runs the other one too if it
+does not match.
+
+**Output columns (ShigaPass report)**
+
+sample, rfb, rfb_hits, rfb_pct, mlst_st, fliC, crispr, ipaH,
+predicted_serotype, predicted_flexserotype, comments (ShigaPass's own
+fields), species_shigapass, serotype_shigapass (readable), warnings,
+shigapass_version, tool_version.
+
+The combined report and its warnings are described in *Combine Shigella
+report*.
+
+@HELP_QRDR@
+
+@HELP_SCOPE@
+
+@HELP_CREDITS@
+    ]]></help>
+    <expand macro="citations_all"/>
+</tool>

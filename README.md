@@ -44,6 +44,7 @@ it. CI runs both.
 
 ```
 tool/                    Galaxy wrappers, test-data and the Python package
+workflows/               example Galaxy workflows
   shigella_typing/       shared code for the CLI and the Galaxy tools
   test-data/             public test data only
 panels/                  bundled Mykrobe panels (sonnei, flexneri)
@@ -53,6 +54,29 @@ validation/              validation scripts, expected results and write-up
 upstream_versions.yml    every upstream version pin
 environment.yml          conda environment for standalone use
 ```
+
+## Galaxy
+
+The three tools are in `tool/` (`shigapass_typing.xml`,
+`mykrobe_shigella.xml`, `shigella_typing_combine.xml`, shared
+`macros.xml`). `scripts/bundle_tool.sh` assembles the Tool Shed upload
+(wrappers, package, bundled panels, test data) in `build/shigella_typing/`;
+test it with `planemo test build/shigella_typing`.
+
+- **Mykrobe Shigella genotyping** runs per sample: map it over a
+  `list:paired` collection (or single-end / Nanopore reads).
+- **ShigaPass typing** takes all assemblies at once; with *Also run Mykrobe
+  genotyping* it also takes the reads collection and writes the combined
+  report.
+- **Combine Shigella report** takes the ShigaPass report and the Mykrobe
+  reports (a collection is fine).
+
+Sample names are the collection element names, so keep them the same in
+the reads and assembly branches. Example workflows (Galaxy Format2, import
+via *Workflows > Import*): `workflows/shigella_typing_separate.gxwf.yml`
+(three tools) and `workflows/shigella_typing_toggle.gxwf.yml` (one step).
+Both take a reads collection and an assemblies collection; plug in your
+own assembler.
 
 ## Running without Galaxy
 

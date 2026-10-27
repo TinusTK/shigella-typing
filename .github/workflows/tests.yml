@@ -39,6 +39,22 @@ jobs:
           python -m unittest discover -s tests -v 2>&1 | tee test.log
           if grep -q "skipped" test.log; then echo "::error::tests were skipped"; exit 1; fi
 
+  planemo-test:
+    name: Galaxy wrapper tests (planemo, conda requirements)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bundle the tool (wrappers, package, panels, test data)
+        run: bash scripts/bundle_tool.sh
+      - name: planemo test
+        run: |
+          pip install planemo edam-ontology
+          planemo test --galaxy_branch release_25.1 --conda_auto_init --conda_auto_install \
+              --test_output_json planemo_test.json build/shigella_typing
+
   planemo-lint:
     name: Galaxy wrapper lint
     runs-on: ubuntu-latest

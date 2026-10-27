@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Galaxy wrappers for the three tools (`tool/*.xml`, shared `macros.xml`),
+  planemo tests on public test data (paired, single-end and Nanopore reads,
+  tool 1 toggle, combine), example workflows in `workflows/`; CI runs
+  planemo lint and planemo test with conda requirements.
 - End-to-end tests (all tools, tools chained, toggle, `run`) on small
   public test data in `tool/test-data/`, rebuilt by
   `validation/make_test_data.sh`; CI job with the conda environment.

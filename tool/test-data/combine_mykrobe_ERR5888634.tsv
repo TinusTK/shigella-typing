@@ -1,0 +1,2 @@
+sample	mykrobe_scheme	mykrobe_species_call	genotype	genotype_name	genotype_confidence	qrdr_mutations	num_qrdr	cipro_prediction	species_coverage	lowest_support_genotype_marker	poorly_supported_markers	additional_markers	warnings	mykrobe_version	mykrobe_panel_version	tool_version
+ERR5888634	none matched	Not E. coli/Shigella	-	-	-	-	-	-	-	-	-	-	Not S. sonnei/S. flexneri	0.13.0	sonnei 20210201; flexneri 20250902	0.1.0

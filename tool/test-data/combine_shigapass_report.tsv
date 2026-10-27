@@ -1,0 +1,5 @@
+sample	rfb	rfb_hits	rfb_pct	mlst_st	fliC	crispr	ipaH	predicted_serotype	predicted_flexserotype	comments	species_shigapass	serotype_shigapass	warnings	shigapass_version	tool_version
+ERR5976293	D	202	70.6%	ST152	ShH25(ShH1cplx)	A-var0,27	ipaH+	SS	-		S. sonnei	-		1.5.0	0.1.0
+ERR5952732	B1-5	139	93.3%	ST245	ShH2(ShH2cplx)	A-var3,x,16	ipaH+	SF1-5	1b		S. flexneri	S. flexneri 1b		1.5.0	0.1.0
+ERR5888634	C2	79	48.2%	ST145	ShH57(ShH3cplx)	A-var2	ipaH+	SB2	-		S. boydii	S. boydii 2		1.5.0	0.1.0
+SWAP	D	202	70.6%	ST152	ShH25(ShH1cplx)	A-var0,27	ipaH+	SS	-		S. sonnei	-		1.5.0	0.1.0

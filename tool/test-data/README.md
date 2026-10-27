@@ -7,6 +7,9 @@ Rebuild them all with `validation/make_test_data.sh`.
 - **Assemblies** keep only the contigs hit by the ShigaPass databases
   (`validation/make_test_assembly.py`). ShigaPass gives the same result as
   on the full assembly.
+- **ONT reads** (SRR22313045) keep only the stretches of each read around
+  probe k-mer hits (100 bp either side), each as its own read. Mykrobe gives
+  the same result as on the full run.
 - **Reads** keep only the read pairs that share a 21-mer with a probe in the
   bundled Mykrobe panels (`validation/make_test_reads.py`). Read names are
   shortened; sequences and qualities are unchanged. Mykrobe gives the same
@@ -25,3 +28,5 @@ Rebuild them all with `validation/make_test_data.sh`.
 | `ERR047239_1/_2.fastq.gz` | ERR047239 | PRJEB2508; mykrobeshig `example_data`, Flex-It | Mykrobe flexneri 2.1.2.7, gyrA_S83L |
 | `SRR4787878_1/_2.fastq.gz` | SRR4787878 | PRJNA315192; Flex-It | *E. coli*: none matched, borderline-coverage warnings |
 | `SRR5306599_1/_2.fastq.gz` | SRR5306599 | PRJNA218110; Flex-It | *S. boydii*: none matched, Not E. coli/Shigella (first 2000 kept pairs only) |
+| `SRR22313045.fastq.gz` | SRR22313045 | PRJNA315192 (UKHSA), Oxford Nanopore MinION | Mykrobe sonnei 3.7.25 (MSM4), no QRDR |
+| `combine_*.tsv` | as above | made from the files above (and the full ERR5888634 reads) by `make_test_data.sh` | Combine Shigella report tests: concordant, discordant (`SWAP` = ERR5976293 assembly + ERR5952732 reads), no-scheme species, missing from either report |

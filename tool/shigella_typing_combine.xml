@@ -1,0 +1,96 @@
+<tool id="shigella_typing_combine" name="Combine Shigella report" version="@TOOL_VERSION@+galaxy@VERSION_SUFFIX@" profile="@PROFILE@">
+    <description>join ShigaPass and Mykrobe reports with cross-check warnings</description>
+    <macros>
+        <import>macros.xml</import>
+    </macros>
+    <requirements>
+        <expand macro="requirements_python"/>
+    </requirements>
+    <expand macro="version_command"/>
+    <command detect_errors="exit_code"><![CDATA[
+@CLI@ combine
+    --shigapass
+    #for $r in $shigapass
+        '$r'
+    #end for
+    --mykrobe
+    #for $r in $mykrobe
+        '$r'
+    #end for
+    $strip_suffixes
+    --outdir out
+    ]]></command>
+    <inputs>
+        <param name="shigapass" type="data" format="tabular" multiple="true"
+               label="ShigaPass report(s)" help="From ShigaPass typing (one report or several)."/>
+        <param name="mykrobe" type="data" format="tabular" multiple="true"
+               label="Mykrobe report(s)" help="From Mykrobe Shigella genotyping: a collection of per-sample reports or one report."/>
+        <param name="strip_suffixes" type="boolean" truevalue="--strip-suffixes" falsevalue="" checked="false"
+               label="Ignore file-name suffixes when matching samples"
+               help="Match after removing _assembly, _contigs, .contigs, .fasta, .fastq, .fna, .fa, .fq. Off: names must match exactly."/>
+    </inputs>
+    <outputs>
+        <data name="combined" format="tabular" from_work_dir="out/shigella_typing_report.tsv"
+              label="${tool.name} on ${on_string}"/>
+    </outputs>
+    <tests>
+        <!-- Matching, discordant, no-scheme species and samples missing from
+             either report -->
+        <test expect_num_outputs="1">
+            <param name="shigapass" value="combine_shigapass_report.tsv" ftype="tabular"/>
+            <param name="mykrobe" value="combine_mykrobe_ERR5976293.tsv,combine_mykrobe_ERR5888634.tsv,combine_mykrobe_SWAP.tsv,combine_mykrobe_SRR8117834.tsv" ftype="tabular"/>
+            <output name="combined">
+                <assert_contents>
+                    <has_n_columns n="30"/>
+                    <has_n_lines n="6"/>
+                    <has_line_matching expression="^ERR5976293\t.*\tSS\t.*\tsonnei\tS\. sonnei\t3\.7\.25\tMSM4\t.*\t\t1\.5\.0\t0\.13\.0\t20210201\t0\.1\.0$"/>
+                    <has_line_matching expression="^ERR5952732\t.*\tMissing from Mykrobe report\t.*"/>
+                    <has_line_matching expression="^ERR5888634\t.*\tNo Mykrobe genotyping scheme for S\. boydii; serotype only\t.*"/>
+                    <has_line_matching expression="^SWAP\t.*\tDiscordant: ShigaPass S\. sonnei, Mykrobe S\. flexneri - check\t.*"/>
+                    <has_line_matching expression="^SRR8117834\t.*\tMissing from ShigaPass report\t.*"/>
+                </assert_contents>
+            </output>
+        </test>
+    </tests>
+    <help><![CDATA[
+**What it does**
+
+Joins the reports of *ShigaPass typing* and *Mykrobe Shigella genotyping*
+on the sample name and adds cross-check warnings. One row per sample. The
+same combined report comes from *ShigaPass typing* with *Also run Mykrobe
+genotyping* set to *Yes*.
+
+Sample names must match exactly unless *Ignore file-name suffixes* is on.
+In a workflow, keep the collection element names the same in both branches
+(assemblers mapped over the reads collection keep them).
+
+**Cross-check warnings**
+
+=========================================================================  ==========================================================================
+Situation                                                                  Warning
+=========================================================================  ==========================================================================
+ShigaPass *S. sonnei*, Mykrobe *S. flexneri* (or the reverse)              ``Discordant: ShigaPass <call>, Mykrobe <species> - check``
+ShigaPass *S. sonnei* / *S. flexneri* 1-5, Mykrobe none matched            ``ShigaPass <call> but Mykrobe did not match the <scheme> scheme - check reads/assembly``
+ShigaPass Not Shigella/EIEC, Mykrobe *S. sonnei* / *S. flexneri*           ``Discordant: ShigaPass Not Shigella/EIEC, Mykrobe <species> - check assembly``
+ShigaPass *S. boydii*, *S. dysenteriae*, *S. flexneri* 6 or EIEC           ``No Mykrobe genotyping scheme for <species>; serotype only`` (expected)
+ShigaPass Not Shigella/EIEC and Mykrobe Not E. coli/Shigella               ``Not Shigella - check organism``
+Sample in one report only                                                  ``Missing from Mykrobe report`` / ``Missing from ShigaPass report``
+Duplicate sample names                                                     the job fails and lists the duplicates
+=========================================================================  ==========================================================================
+
+Warnings from the two tools (e.g. borderline species coverage) are kept.
+
+**Output columns**
+
+The ShigaPass columns (sample to serotype_shigapass), the Mykrobe columns
+(mykrobe_scheme to additional_markers), one ``warnings`` column, then
+shigapass_version, mykrobe_version, mykrobe_panel_version, tool_version.
+
+@HELP_QRDR@
+
+@HELP_SCOPE@
+
+@HELP_CREDITS@
+    ]]></help>
+    <expand macro="citations_all"/>
+</tool>
