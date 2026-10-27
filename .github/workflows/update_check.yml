@@ -1,0 +1,159 @@
+name: Upstream update check
+
+# Once a year (1 February) and by hand from the Actions tab. Compares
+# Mykrobe, ShigaPass, BLAST, mykrobeshig and the Mykrobe panels against
+# upstream_versions.yml (scripts/check_upstream.py). No change: summary only.
+# On a change it updates every pin, bumps the patch version, runs the tests
+# on the small test data, compares the calls before and after, and opens a
+# pull request (a draft if a test failed). It never merges, tags or
+# publishes: merging the pull request starts the Release workflow.
+#
+# Pull requests opened by this workflow do not start the Tests workflow
+# (GitHub rule), so the tests run here and their results go in the PR.
+on:
+  schedule:
+    - cron: "0 0 1 2 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      WORK: ${{ runner.temp }}/update
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip if an update pull request is already open
+        id: open
+        run: |
+          N=$(gh pr list --state open --json headRefName \
+                -q '[.[] | select(.headRefName | startswith("update/"))] | length')
+          echo "count=$N" >> "$GITHUB_OUTPUT"
+          [ "$N" = "0" ] || echo "::notice::An update pull request is already open - review that one first"
+
+      - name: Check upstream
+        id: check
+        if: steps.open.outputs.count == '0'
+        run: |
+          mkdir -p "$WORK"
+          python3 scripts/check_upstream.py check --changes "$WORK/changes.json" --summary "$WORK/summary.md"
+          cat "$WORK/summary.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: mamba-org/setup-micromamba@v2
+        if: steps.check.outputs.changed == 'true'
+        with:
+          environment-file: environment.yml
+
+      - name: Calls before the update (test data)
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          pip install -e .
+          python scripts/check_upstream.py report --outdir "$WORK/before"
+
+      - name: Update pins, vendored code and version
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          python scripts/check_upstream.py apply --changes "$WORK/changes.json" --notes "$WORK/notes.md"
+          micromamba install -y -n shigella-typing -f environment.yml
+          python scripts/check_upstream.py panels --changes "$WORK/changes.json"
+          pip install -e .
+
+      - name: Tests and calls after the update
+        id: tests
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          set +e
+          python -m unittest discover -s tests > "$WORK/unit.log" 2>&1
+          echo "unit=$?" >> "$GITHUB_OUTPUT"
+          python scripts/check_upstream.py report --outdir "$WORK/after" > "$WORK/report.log" 2>&1
+          echo "report=$?" >> "$GITHUB_OUTPUT"
+          python scripts/check_upstream.py compare "$WORK/before/run/shigella_typing_report.tsv" \
+              "$WORK/after/run/shigella_typing_report.tsv" > "$WORK/compare.md" 2>&1
+          exit 0
+
+      # Outside the micromamba environment, as in the Tests workflow
+      - uses: actions/setup-python@v5
+        if: steps.check.outputs.changed == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Galaxy wrapper lint and tests
+        id: planemo
+        if: steps.check.outputs.changed == 'true'
+        shell: bash {0}
+        run: |
+          bash scripts/bundle_tool.sh
+          pip install planemo edam-ontology
+          planemo lint --fail_level warn build/shigella_typing > "$WORK/lint.log" 2>&1
+          echo "lint=$?" >> "$GITHUB_OUTPUT"
+          planemo test --galaxy_branch release_25.1 --conda_auto_init --conda_auto_install \
+              build/shigella_typing > "$WORK/planemo.log" 2>&1
+          echo "planemo=$?" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Open the pull request
+        if: steps.check.outputs.changed == 'true'
+        env:
+          UNIT: ${{ steps.tests.outputs.unit }}
+          REPORT: ${{ steps.tests.outputs.report }}
+          LINT: ${{ steps.planemo.outputs.lint }}
+          PLANEMO: ${{ steps.planemo.outputs.planemo }}
+        run: |
+          ok() { [ "$1" = "0" ] && echo "passed" || echo "**FAILED**"; }
+          BRANCH="update/$(date +%F)"
+          VERSION=$(head -1 "$WORK/notes.md")
+          {
+            echo "Automatic upstream update check. $VERSION."
+            echo
+            echo "## What changed"
+            tail -n +3 "$WORK/notes.md"
+            echo
+            cat "$WORK/summary.md"
+            echo
+            echo "## Tests (small test data)"
+            echo
+            echo "| Check | Result |"
+            echo "|---|---|"
+            echo "| Unit and end-to-end tests | $(ok "$UNIT") |"
+            echo "| \`shigella-typing run\` on test data | $(ok "$REPORT") |"
+            echo "| planemo lint | $(ok "$LINT") |"
+            echo "| planemo test (Galaxy release_25.1) | $(ok "$PLANEMO") |"
+            echo
+            echo "Logs are in the workflow run: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo
+            echo "## Calls before and after (test data)"
+            echo
+            cat "$WORK/compare.md"
+            echo
+            echo "## Before merging"
+            echo
+            echo "- [ ] Read the upstream changes (release notes / compare link above)."
+            echo "- [ ] If Mykrobe or a panel changed: re-run the 19-run and 45-run validation locally."
+            echo "- [ ] If mykrobeshig changed: check \`tests/data/mykrobeshig_example\` still matches upstream."
+            echo "- [ ] If a panel changed: update the file checksums in \`panels/SOURCES.md\`."
+            echo "- [ ] Docs that name versions (README, macros.xml help) read right."
+            echo
+            echo "Merging this pull request releases the new version to GitHub and the Tool Shed."
+          } > "$WORK/body.md"
+          for log in unit lint planemo; do
+            echo "### $log log (last 40 lines)" >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"; tail -40 "$WORK/$log.log" >> "$GITHUB_STEP_SUMMARY"; echo '```' >> "$GITHUB_STEP_SUMMARY"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add -A -- . ':!build'
+          git commit -m "Upstream update: $VERSION"
+          git push origin "$BRANCH"
+          DRAFT=""
+          for r in "$UNIT" "$REPORT" "$LINT" "$PLANEMO"; do [ "$r" = "0" ] || DRAFT="--draft"; done
+          gh pr create $DRAFT --base main --head "$BRANCH" \
+              --title "Upstream update: $VERSION" --body-file "$WORK/body.md"

@@ -127,6 +127,14 @@ the version, creates the GitHub release (notes from `CHANGELOG.md`) and
 publishes to the Tool Shed as `tinustk/shigella_typing`. Galaxy servers
 install the new version from there.
 
+**Upstream updates.** Once a year (1 February), or by hand from the Actions
+tab, the Upstream update check (`.github/workflows/update_check.yml`,
+`scripts/check_upstream.py`) compares Mykrobe, ShigaPass, mykrobeshig and
+the Mykrobe panels against `upstream_versions.yml`. If anything changed it
+updates the pins, bumps the patch version, runs the tests on the test data
+and opens a pull request showing any calls that changed. Nothing is
+released until that pull request is reviewed and merged.
+
 ## Running without Galaxy
 
 ```
