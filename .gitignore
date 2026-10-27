@@ -1,9 +1,14 @@
 .DS_Store
-# Private: never published
+# Private: never published (project memory, Claude settings, notes, chats)
 Local/
 Sessions/
 CLAUDE.md
+CLAUDE.local.md
 *memory.md
+*Memory.md
+personal*.md
+.claude/
+*.jsonl
 
 # Full-size validation reads/assemblies: local only, too big for GitHub
 validation/data/
