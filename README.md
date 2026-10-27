@@ -92,6 +92,8 @@ tool/                    Galaxy wrappers, test-data and the Python package
 workflows/               example Galaxy workflows
 panels/                  bundled Mykrobe panels (sonnei, flexneri)
 scripts/bundle_tool.sh   assembles build/shigella_typing/ for Galaxy / the Tool Shed
+scripts/check_upstream.py  upstream update check (run by the yearly workflow)
+.github/workflows/       tests, release + Tool Shed publish, upstream update check
 tests/                   unit and end-to-end tests (python -m unittest discover -s tests)
 validation/              validation scripts, expected results and write-up
 upstream_versions.yml    every upstream version pin
