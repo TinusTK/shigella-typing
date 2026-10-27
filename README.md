@@ -225,6 +225,46 @@ Mykrobe tries the scheme matching the ShigaPass call first and runs the
 other one too if it does not match, so the result is the same as running
 the three tools separately (`validation/PHASE5.md`).
 
+Example: four samples from the combined report
+`out/shigella_typing_report.tsv` (one row per sample in the file; shown here
+turned on its side). An *S. sonnei*, an *S. flexneri*, an *S. boydii* (no
+Mykrobe scheme, serotype only) and a deliberate mix-up (*S. sonnei* assembly
+with *S. flexneri* reads) that gets a warning. The full file, with missing
+reads, missing assembly and not-*Shigella* cases too, is
+[`validation/phase5_combined_report.tsv`](validation/phase5_combined_report.tsv).
+
+| Column | ERR5976293 | ERR5952732 | ERR5888634 | SWAP_sonnei_asm_flex_reads |
+|---|---|---|---|---|
+| `rfb` | D | B1-5 | C2 | D |
+| `rfb_hits` | 202 | 139 | 79 | 202 |
+| `rfb_pct` | 70.6% | 93.3% | 48.2% | 70.6% |
+| `mlst_st` | ST152 | ST245 | ST145 | ST152 |
+| `fliC` | ShH25(ShH1cplx) | ShH2(ShH2cplx) | ShH57(ShH3cplx) | ShH25(ShH1cplx) |
+| `crispr` | A-var0,27 | A-var3,x,16 | A-var2 | A-var0,27 |
+| `ipaH` | ipaH+ | ipaH+ | ipaH+ | ipaH+ |
+| `predicted_serotype` | SS | SF1-5 | SB2 | SS |
+| `predicted_flexserotype` | - | 1b | - | - |
+| `comments` |  |  |  |  |
+| `species_shigapass` | S. sonnei | S. flexneri | S. boydii | S. sonnei |
+| `serotype_shigapass` | - | S. flexneri 1b | S. boydii 2 | - |
+| `mykrobe_scheme` | sonnei | flexneri | none matched | flexneri |
+| `mykrobe_species_call` | S. sonnei | S. flexneri | Not E. coli/Shigella | S. flexneri |
+| `genotype` | 3.7.25 | 1.2.2.5.3 | - | 1.2.2.5.3 |
+| `genotype_name` | MSM4 | - | - | - |
+| `genotype_confidence` | strong | strong | - | strong |
+| `qrdr_mutations` | none | none | - | none |
+| `num_qrdr` | 0 | 0 | - | 0 |
+| `cipro_prediction` | no QRDR mutations | no QRDR mutations | - | no QRDR mutations |
+| `species_coverage` | 95.196 | 88.459 | - | 88.459 |
+| `lowest_support_genotype_marker` | - | - | - | - |
+| `poorly_supported_markers` | - | - | - | - |
+| `additional_markers` | - | - | - | - |
+| `warnings` |  |  | No Mykrobe genotyping scheme for S. boydii; serotype only | Discordant: ShigaPass S. sonnei, Mykrobe S. flexneri - check |
+| `shigapass_version` | 1.5.0 | 1.5.0 | 1.5.0 | 1.5.0 |
+| `mykrobe_version` | 0.13.0 | 0.13.0 | 0.13.0 | 0.13.0 |
+| `mykrobe_panel_version` | 20210201 | 20250902 | sonnei 20210201; flexneri 20250902 | 20250902 |
+| `tool_version` | 0.1.0 | 0.1.0 | 0.1.0 | 0.1.0 |
+
 ## Software and data used
 
 Please cite these if you use the tools:
