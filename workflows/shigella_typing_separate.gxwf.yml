@@ -9,7 +9,7 @@ creator:
   - class: Person
     name: TinusTK
 license: GPL-3.0-or-later
-release: "1.0.0"
+release: "1.0.1"
 inputs:
   reads:
     type: collection
@@ -29,8 +29,8 @@ outputs:
 steps:
   shigapass:
     doc: ShigaPass typing - species and serotype from the assemblies.
-    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigapass_typing/1.0.0+galaxy0
-    tool_version: 1.0.0+galaxy0
+    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigapass_typing/1.0.1+galaxy0
+    tool_version: 1.0.1+galaxy0
     in:
       assemblies: assemblies
     state:
@@ -38,8 +38,8 @@ steps:
         run: "no"
   mykrobe:
     doc: Mykrobe Shigella genotyping - genotype and QRDR mutations from each sample's reads.
-    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/mykrobe_shigella/1.0.0+galaxy0
-    tool_version: 1.0.0+galaxy0
+    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/mykrobe_shigella/1.0.1+galaxy0
+    tool_version: 1.0.1+galaxy0
     in:
       reads|input: reads
     state:
@@ -48,8 +48,8 @@ steps:
       scheme: auto
   combine:
     doc: Combine Shigella report - one row per sample with cross-check warnings.
-    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigella_typing_combine/1.0.0+galaxy0
-    tool_version: 1.0.0+galaxy0
+    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigella_typing_combine/1.0.1+galaxy0
+    tool_version: 1.0.1+galaxy0
     in:
       shigapass: shigapass/report
       mykrobe: mykrobe/report

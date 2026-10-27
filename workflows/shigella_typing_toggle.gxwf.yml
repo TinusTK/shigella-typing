@@ -10,7 +10,7 @@ creator:
   - class: Person
     name: TinusTK
 license: GPL-3.0-or-later
-release: "1.0.0"
+release: "1.0.1"
 inputs:
   reads:
     type: collection
@@ -30,8 +30,8 @@ outputs:
 steps:
   shigapass:
     doc: ShigaPass typing with Also run Mykrobe genotyping on - ShigaPass, Mykrobe and combined reports in one step.
-    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigapass_typing/1.0.0+galaxy0
-    tool_version: 1.0.0+galaxy0
+    tool_id: toolshed.g2.bx.psu.edu/repos/tinustk/shigella_typing/shigapass_typing/1.0.1+galaxy0
+    tool_version: 1.0.1+galaxy0
     in:
       assemblies: assemblies
       mykrobe|reads|input: reads

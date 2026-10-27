@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.0.1 (2026-10-27)
 
 - Docs: Mykrobe's `Not E. coli/Shigella` call on some *S. boydii* /
   *S. dysenteriae* is explained in the README and the Mykrobe tool help.
