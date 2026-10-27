@@ -4,6 +4,8 @@ message: >-
   (listed under references), as well as this repository.
 title: shigella-typing
 type: software
+version: 1.0.0
+date-released: 2026-10-27
 license: GPL-3.0-or-later
 repository-code: https://github.com/TinusTK/shigella-typing
 authors:

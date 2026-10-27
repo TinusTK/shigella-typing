@@ -1,7 +1,5 @@
 # Galaxy *Shigella* Typing Tools
 
-> **Work in progress.** Not ready for use yet.
-
 Three tools, usable in Galaxy or as a standalone command (`shigella-typing`),
 that answer for each isolate:
 
@@ -20,6 +18,47 @@ that answer for each isolate:
 
 The tools are for *Shigella* only. For *M. tuberculosis* use TB-Profiler;
 for other Mykrobe species use the IUC `mykrobe_predict` tool.
+
+```mermaid
+flowchart LR
+    R["Reads<br/>(list:paired collection)"] --> M["Mykrobe Shigella<br/>genotyping"]
+    R --> A["Your assembler<br/>(e.g. Shovill)"]
+    A --> S["ShigaPass typing"]
+    M -- "Mykrobe reports" --> C["Combine Shigella<br/>report"]
+    S -- "ShigaPass report" --> C
+    C --> O["Combined report<br/>with cross-check warnings"]
+```
+
+Or in one step: *ShigaPass typing* with *Also run Mykrobe genotyping* takes
+the assemblies and the reads and gives the same combined report.
+
+## Interpreting the results
+
+- **QRDR mutations are genotypic markers, not a replacement for
+  antimicrobial susceptibility testing (AST).** `cipro_prediction` is
+  `no QRDR mutations`, `QRDR mutation(s): reduced susceptibility likely`
+  (1-2 mutations in *gyrA* / *parC*) or `QRDR triple mutant: resistance
+  likely` (3 or more). The panels cover *gyrA* S83 / D87 and *parC* S80
+  only; plasmid-mediated quinolone resistance (*qnr*, *aac(6')-Ib-cr*) and
+  other resistance genes are not detected.
+- **Genotypes exist only for *S. sonnei* and *S. flexneri* serotypes 1-5.**
+  *S. boydii*, *S. dysenteriae*, *S. flexneri* serotype 6 and EIEC get a
+  species and serotype from ShigaPass but no Mykrobe genotype; the combined
+  report says so (`No Mykrobe genotyping scheme for ...; serotype only`).
+  *S. flexneri* 6 is genetically closer to *S. boydii* and is outside Flex-It.
+- **EIEC and *Shigella*** are one pathotype of *E. coli*; ShigaPass separates
+  them with *ipaH*, *rfb*, MLST, *fliC* and CRISPR markers. An `ipaH negative`
+  call means neither *Shigella* nor EIEC.
+- **Discordant calls** (ShigaPass says one species, Mykrobe another) usually
+  mean a sample mix-up, contamination or a wrong pairing of reads and
+  assembly: check before reporting.
+- **Borderline species coverage** (within 1 point of the mykrobeshig
+  threshold, *S. sonnei* 90, *S. flexneri* 85.5) is flagged; look at read
+  depth and quality.
+- **Panel versions** are in every row (`mykrobe_panel_version`): *S. sonnei*
+  20210201 (Sonneityping) and *S. flexneri* 20250902 (Flex-It). Genotype
+  names can change between panel versions; compare results made with the
+  same versions.
 
 ## Validation
 
@@ -44,9 +83,9 @@ it. CI runs both.
 
 ```
 tool/                    Galaxy wrappers, test-data and the Python package
-workflows/               example Galaxy workflows
   shigella_typing/       shared code for the CLI and the Galaxy tools
   test-data/             public test data only
+workflows/               example Galaxy workflows
 panels/                  bundled Mykrobe panels (sonnei, flexneri)
 scripts/bundle_tool.sh   assembles build/shigella_typing/ for Galaxy / the Tool Shed
 tests/                   unit and end-to-end tests (python -m unittest discover -s tests)
@@ -193,7 +232,18 @@ Please cite these if you use the tools:
 - **Mykrobe panel data**: [Mykrobe-tools/mykrobe-data](https://github.com/Mykrobe-tools/mykrobe-data) (MIT).
 - **Bioconda**: Grüning B, *et al.* *Nat Methods* 2018;15:475–476.
   [doi:10.1038/s41592-018-0046-7](https://doi.org/10.1038/s41592-018-0046-7).
-- **Galaxy** and **Galaxy Australia**: citation to be added.
+- **Galaxy**: The Galaxy Community. Galaxy for accessible, reproducible,
+  and collaborative data analyses: 2026 update. *Nucleic Acids Res*
+  2026;54(W1):W105–W116.
+  [doi:10.1093/nar/gkag469](https://doi.org/10.1093/nar/gkag469).
+- **Planemo** (Galaxy tool development and testing):
+  [galaxyproject/planemo](https://github.com/galaxyproject/planemo).
+
+If you run the tools on **Galaxy Australia**, please also add its
+acknowledgement: "This work is supported by Galaxy Australia, a service
+provided by Australian BioCommons and its partners. The service receives
+NCRIS funding through Bioplatforms Australia and The University of
+Melbourne."
 
 ## Licence
 

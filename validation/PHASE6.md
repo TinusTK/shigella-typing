@@ -58,6 +58,10 @@ Suggested Galaxy Australia allocation (per job, before Galaxy's own
 staging time; Linux nodes may be slower than this laptop):
 
 - **Tool 1**: 1 core, 1 GB. About 10 s per assembly; more threads barely help.
+  Runtime grows with the number of contigs: 45 Shovill assemblies (860 to
+  6374 contigs each, many under 500 bp) took 14 min in one job with 4
+  threads, about 19 s per assembly on average and over a minute for the
+  most fragmented ones.
 - **Tool 2**: 2-4 cores, 2 GB (matches `--memory 2048MB`). About 10-30 s
   per sample with 2 threads; scales well to 4.
 - **Tool 1 with the Mykrobe toggle / `run`**: as tool 2, times the number of

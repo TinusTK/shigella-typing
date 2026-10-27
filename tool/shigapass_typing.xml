@@ -25,7 +25,7 @@
         #if $mykrobe.reads.type == 'ont'
             --ont
         #end if
-        #set $raw = $raw + [o for o in str($mykrobe.raw_outputs).split(',') if o and o != 'None']
+        #set $raw = $raw + [o for o in str($mykrobe.mykrobe_raw_outputs).split(',') if o and o != 'None']
         @PANELS@
     #end if
     #if $raw
@@ -66,7 +66,7 @@ ${name}	${mykrobe.reads.input[$key]}
             <when value="no"/>
             <when value="yes">
                 <expand macro="reads_collection_input"/>
-                <param name="raw_outputs" type="select" display="checkboxes" multiple="true" optional="true"
+                <param name="mykrobe_raw_outputs" type="select" display="checkboxes" multiple="true" optional="true"
                        label="Also output Mykrobe's own files">
                     <option value="json">Mykrobe JSON (one per sample and scheme)</option>
                     <option value="predictresults">mykrobeshig predictResults.tsv</option>
@@ -95,11 +95,11 @@ ${name}	${mykrobe.reads.input[$key]}
         </data>
         <collection name="json" type="list" label="${tool.name} on ${on_string}: Mykrobe JSON">
             <discover_datasets pattern="(?P&lt;designation&gt;.+)\.json" directory="out" format="json"/>
-            <filter>mykrobe['run'] == 'yes' and mykrobe['raw_outputs'] and 'json' in mykrobe['raw_outputs']</filter>
+            <filter>mykrobe['run'] == 'yes' and mykrobe['mykrobe_raw_outputs'] and 'json' in mykrobe['mykrobe_raw_outputs']</filter>
         </collection>
         <data name="predictresults" format="tabular" from_work_dir="out/mykrobeshig_predictResults.tsv"
               label="${tool.name} on ${on_string}: mykrobeshig predictResults">
-            <filter>mykrobe['run'] == 'yes' and mykrobe['raw_outputs'] and 'predictresults' in mykrobe['raw_outputs']</filter>
+            <filter>mykrobe['run'] == 'yes' and mykrobe['mykrobe_raw_outputs'] and 'predictresults' in mykrobe['mykrobe_raw_outputs']</filter>
         </data>
     </outputs>
     <tests>
@@ -111,7 +111,7 @@ ${name}	${mykrobe.reads.input[$key]}
                 <assert_contents>
                     <has_n_columns n="16"/>
                     <has_n_lines n="5"/>
-                    <has_line_matching expression="^ERR5976293\.fasta\.gz\tD\t202\t70\.6%\tST152\t.*\tSS\t-\t\tS\. sonnei\t-\t\t1\.5\.0\t0\.1\.0$"/>
+                    <has_line_matching expression="^ERR5976293\.fasta\.gz\tD\t202\t70\.6%\tST152\t.*\tSS\t-\t\tS\. sonnei\t-\t\t1\.5\.0\t[0-9.]+$"/>
                     <has_line_matching expression="^ERR5952732\.fasta\.gz\tB1-5\t.*\tSF1-5\t1b\t\tS\. flexneri\tS\. flexneri 1b\t.*"/>
                     <has_line_matching expression="^ERR5888634\.fasta\.gz\t.*\tSB2\t-\t\tS\. boydii\tS\. boydii 2\t.*"/>
                     <has_line_matching expression="^ERR5982186\.fasta\.gz\t.*\tSD2\t-\t\tS\. dysenteriae\tS\. dysenteriae 2\t.*"/>
@@ -160,7 +160,7 @@ ${name}	${mykrobe.reads.input[$key]}
                 <assert_contents>
                     <has_n_columns n="30"/>
                     <has_n_lines n="4"/>
-                    <has_line_matching expression="^ERR5952732\.fasta\.gz\t.*\tSF1-5\t1b\t.*\tflexneri\tS\. flexneri\t1\.2\.2\.5\.3\t.*\t\t1\.5\.0\t0\.13\.0\t20250902\t0\.1\.0$"/>
+                    <has_line_matching expression="^ERR5952732\.fasta\.gz\t.*\tSF1-5\t1b\t.*\tflexneri\tS\. flexneri\t1\.2\.2\.5\.3\t.*\t\t1\.5\.0\t0\.13\.0\t20250902\t[0-9.]+$"/>
                     <has_line_matching expression="^ERR5976293\.fasta\.gz\t.*\tSS\t.*\tflexneri\t.*\tDiscordant: ShigaPass S\. sonnei, Mykrobe S\. flexneri - check\t.*"/>
                     <has_line_matching expression="^ERR5888634\.fasta\.gz\t.*\tSB2\t.*\tMykrobe not run: missing reads\t.*"/>
                 </assert_contents>
