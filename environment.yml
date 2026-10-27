@@ -14,3 +14,10 @@ dependencies:
   - setuptools<81
   - shigapass=1.5.0
   - blast=2.17.0
+  # ShigaPass.sh needs GNU bash 4+, coreutils (paste), sed, awk and grep.
+  # Linux already has them; on macOS the BSD versions make it abort.
+  - bash
+  - coreutils
+  - sed
+  - gawk
+  - grep

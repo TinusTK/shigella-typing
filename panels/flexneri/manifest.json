@@ -1,0 +1,24 @@
+{
+    "default_panel": "20250902",
+    "panels": {
+        "20250902": {
+            "description": "Genotyping panel for Shigella flexneri, including lineage and panel for variants in the quinolone resistance determining region. Described in Hawkey et al 2026.",
+            "kmer": 21,
+            "fasta_files": [
+                "shigella.probe.uidA.20240308.fa.gz",
+                "flexneri.mlst.20240308.fa.gz",
+                "flexneri.lineage.20241210.probes.fa.gz",
+                "flexneri.amr.20250902.probes.fa.gz"
+            ],
+            "json_files": {
+                "lineage": "flexneri.lineage.20241210.json",
+                "hierarchy": null,
+                "amr": "flexneri.amr.20250902.json"
+            },
+            "reference_genome": "AE005674",
+            "species_phylo_group": "Ecoli_Shigella"
+        }
+    },
+    "species_name": "flexneri",
+    "version": "20250902"
+}

@@ -11,11 +11,13 @@ shigapass:
   source: bioconda
   version: "1.5.0"
   repo: https://github.com/imanyass/ShigaPass
-  upstream_main_sha: null        # Phase 2: compare bioconda with upstream main
+  # bioconda 1.5.0 == upstream main (script + all 21 database files
+  # byte-identical, checked 2026-10-27)
+  upstream_main_sha: 7eb5e11bd323f21b00a8ba89864f942c579b32d5
 
 blast:
   source: bioconda
-  version: "2.17.0"              # Phase 2: confirm ShigaPass works with it
+  version: "2.17.0"              # ShigaPass examples reproduce exactly (2026-10-27)
   informational_only: true
 
 mykrobeshig:
@@ -23,11 +25,12 @@ mykrobeshig:
   repo: https://github.com/ShigellaGenomics/mykrobeshig
   sha: 4c7521b9fa84f931bf86e39c14cc6f2880a45775
 
-panels:                          # bundled in panels/ (Phase 2)
+panels:                          # bundled in panels/ (see panels/SOURCES.md)
   manifest: https://raw.githubusercontent.com/Mykrobe-tools/mykrobe-data/main/mykrobe_panels_manifest.json
   sonnei:
     version: "20210201"
     url: https://ndownloader.figshare.com/files/26274424
+    sha256: 7dec81c74485e4bcc114a9722d136e1d6710d6496b6f62c6b5b1902e2b98d1f9
   flexneri:
     version: "20250902"
     url: https://ndownloader.figshare.com/files/63190870

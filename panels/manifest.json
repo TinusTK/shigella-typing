@@ -1,0 +1,50 @@
+{
+  "flexneri": {
+    "installed": {
+      "url": "https://ndownloader.figshare.com/files/63190870",
+      "version": "20250902"
+    },
+    "latest": {
+      "url": "https://ndownloader.figshare.com/files/63190870",
+      "version": "20250902"
+    }
+  },
+  "paratyphiB": {
+    "installed": null,
+    "latest": {
+      "url": "https://figshare.com/ndownloader/files/43870968",
+      "version": "20230627"
+    }
+  },
+  "sonnei": {
+    "installed": {
+      "url": "https://ndownloader.figshare.com/files/26274424",
+      "version": "20210201"
+    },
+    "latest": {
+      "url": "https://ndownloader.figshare.com/files/26274424",
+      "version": "20210201"
+    }
+  },
+  "staph": {
+    "installed": null,
+    "latest": {
+      "url": "https://ndownloader.figshare.com/files/24914930",
+      "version": "20201001"
+    }
+  },
+  "tb": {
+    "installed": null,
+    "latest": {
+      "url": "https://figshare.com/ndownloader/files/42494211",
+      "version": "20230928"
+    }
+  },
+  "typhi": {
+    "installed": null,
+    "latest": {
+      "url": "https://figshare.com/ndownloader/files/49527246",
+      "version": "20240407"
+    }
+  }
+}

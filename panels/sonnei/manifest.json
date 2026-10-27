@@ -1,0 +1,41 @@
+{
+  "default_panel": "20210201",
+  "panels": {
+    "20201012": {
+      "description": "Genotyping panel for Shigella sonnei based on scheme defined in Hawkey 2020, and panel for variants in the quinolone resistance determining regions in gyrA and parC",
+      "kmer": 21,
+      "fasta_files": [
+        "sonnei.lineage.20201007.probes.fa.gz",
+        "sonnei.mlst.20201010.sonnei.fa.gz",
+        "sonnei.probe.uidA.20201010.fa.gz",
+        "sonnei.qrdr.20201010.probes.fa.gz"
+      ],
+      "json_files": {
+        "amr": "sonnei.qrdr.20201010.res_to_drug.json",
+        "lineage": "sonnei.lineage.20201007.json",
+        "hierarchy": null
+      },
+      "reference_genome": "NC_016822.1",
+      "species_phylo_group": "Ecoli_Shigella"
+    },
+    "20210201": {
+      "description": "Genotyping panel for Shigella sonnei based on scheme defined in Hawkey 2020, and panel for variants in the quinolone resistance determining regions in gyrA and parC (same as 20201012, but with lineage3.7.30 added)",
+      "kmer": 21,
+      "fasta_files": [
+        "sonnei.lineage.20210201.probes.fa.gz",
+        "sonnei.mlst.20201010.sonnei.fa.gz",
+        "sonnei.probe.uidA.20201010.fa.gz",
+        "sonnei.qrdr.20201010.probes.fa.gz"
+      ],
+      "json_files": {
+        "amr": "sonnei.qrdr.20201010.res_to_drug.json",
+        "lineage": "sonnei.lineage.20210201.json",
+        "hierarchy": null
+      },
+      "reference_genome": "NC_016822.1",
+      "species_phylo_group": "Ecoli_Shigella"
+    }
+  },
+  "species_name": "sonnei",
+  "version": "20210201"
+}

@@ -1,0 +1,597 @@
+{
+  "A103208G": {
+    "name": "lineage2.3.2.1",
+    "report_name": "2.3.2.1",
+    "use_ref_allele": false
+  },
+  "A1274851T": {
+    "name": "lineage1.2.2.1",
+    "report_name": "1.2.2.1",
+    "use_ref_allele": false
+  },
+  "A1323975G": {
+    "name": "lineage1.1.6.2",
+    "report_name": "1.1.6.2",
+    "use_ref_allele": false
+  },
+  "A1790048T": {
+    "name": "lineage3.1.1.3",
+    "report_name": "3.1.1.3",
+    "use_ref_allele": false
+  },
+  "A186941T": {
+    "name": "lineage1.2.2.5.6",
+    "report_name": "1.2.2.5.6",
+    "use_ref_allele": false
+  },
+  "A2119262C": {
+    "name": "lineage2.3.4",
+    "report_name": "2.3.4",
+    "use_ref_allele": false
+  },
+  "A2125645G": {
+    "name": "lineage2.3.3",
+    "report_name": "2.3.3",
+    "use_ref_allele": false
+  },
+  "A2607652G": {
+    "name": "lineage2.3.8.1",
+    "report_name": "2.3.8.1",
+    "use_ref_allele": false
+  },
+  "A2867464G": {
+    "name": "lineage1.2",
+    "report_name": "1.2",
+    "use_ref_allele": false
+  },
+  "A3425050G": {
+    "name": "lineage3.2",
+    "report_name": "3.2",
+    "use_ref_allele": true
+  },
+  "A3434090C": {
+    "name": "lineage9",
+    "report_name": "9",
+    "use_ref_allele": false
+  },
+  "A78813G": {
+    "name": "lineage3.2.1.4",
+    "report_name": "3.2.1.4",
+    "use_ref_allele": false
+  },
+  "C102932T": {
+    "name": "lineage7",
+    "report_name": "7",
+    "use_ref_allele": false
+  },
+  "C1116193T": {
+    "name": "lineage3.2.1",
+    "report_name": "3.2.1",
+    "use_ref_allele": false
+  },
+  "C1134262A": {
+    "name": "lineage1.2.2.5.1",
+    "report_name": "1.2.2.5.1",
+    "use_ref_allele": false
+  },
+  "C1140433T": {
+    "name": "lineage2.3.2",
+    "report_name": "2.3.2",
+    "use_ref_allele": false
+  },
+  "C1205800T": {
+    "name": "lineage1.1",
+    "report_name": "1.1",
+    "use_ref_allele": false
+  },
+  "C1277070T": {
+    "name": "lineage1.2.2.5.9",
+    "report_name": "1.2.2.5.9",
+    "use_ref_allele": false
+  },
+  "C12840T": {
+    "name": "lineage2.3.4.2",
+    "report_name": "2.3.4.2",
+    "use_ref_allele": false
+  },
+  "C1308287T": {
+    "name": "lineage1",
+    "report_name": "1",
+    "use_ref_allele": false
+  },
+  "C1545757T": {
+    "name": "lineage2.3.3.1",
+    "report_name": "2.3.3.1",
+    "use_ref_allele": false
+  },
+  "C1706289T": {
+    "name": "lineage2.3.8.2",
+    "report_name": "2.3.8.2",
+    "use_ref_allele": false
+  },
+  "C1899681T": {
+    "name": "lineage1.2.2.4",
+    "report_name": "1.2.2.4",
+    "use_ref_allele": false
+  },
+  "C2103994T": {
+    "name": "lineage6.1",
+    "report_name": "6.1",
+    "use_ref_allele": false
+  },
+  "C2107639T": {
+    "name": "lineage2.3.4.1",
+    "report_name": "2.3.4.1",
+    "use_ref_allele": false
+  },
+  "C2116130T": {
+    "name": "lineage3.1.1.2",
+    "report_name": "3.1.1.2",
+    "use_ref_allele": false
+  },
+  "C2519988T": {
+    "name": "lineage2.1.2",
+    "report_name": "2.1.2",
+    "use_ref_allele": false
+  },
+  "C2609706T": {
+    "name": "lineage2.1.2.5",
+    "report_name": "2.1.2.5",
+    "use_ref_allele": false
+  },
+  "C2743700T": {
+    "name": "lineage6.3.2",
+    "report_name": "6.3.2",
+    "use_ref_allele": false
+  },
+  "C2776803T": {
+    "name": "lineage3.1.1.1",
+    "report_name": "3.1.1.1",
+    "use_ref_allele": false
+  },
+  "C3147058A": {
+    "name": "lineage3.1.1.4",
+    "report_name": "3.1.1.4",
+    "use_ref_allele": false
+  },
+  "C3443683T": {
+    "name": "lineage2.2.2",
+    "report_name": "2.2.2",
+    "use_ref_allele": false
+  },
+  "C3445280A": {
+    "name": "lineage6.3",
+    "report_name": "6.3",
+    "use_ref_allele": false
+  },
+  "C349200T": {
+    "name": "lineage3.2.1.3.1",
+    "report_name": "3.2.1.3.1",
+    "use_ref_allele": false
+  },
+  "C358477T": {
+    "name": "lineage1.2.2.5",
+    "report_name": "1.2.2.5",
+    "use_ref_allele": false
+  },
+  "C362576T": {
+    "name": "lineage1.2.2.3",
+    "report_name": "1.2.2.3",
+    "use_ref_allele": false
+  },
+  "C3929049T": {
+    "name": "lineage1.1.1",
+    "report_name": "1.1.1",
+    "use_ref_allele": false
+  },
+  "C393156T": {
+    "name": "lineage1.2.2.5.2",
+    "report_name": "1.2.2.5.2",
+    "use_ref_allele": false
+  },
+  "C3984078T": {
+    "name": "lineage2.1.2.4",
+    "report_name": "2.1.2.4",
+    "use_ref_allele": false
+  },
+  "C399076T": {
+    "name": "lineage1.1.3.1",
+    "report_name": "1.1.3.1",
+    "use_ref_allele": false
+  },
+  "C4197584T": {
+    "name": "lineage3.2.1.5.2",
+    "report_name": "3.2.1.5.2",
+    "use_ref_allele": false
+  },
+  "C4197746T": {
+    "name": "lineage4",
+    "report_name": "4",
+    "use_ref_allele": false
+  },
+  "C4198784T": {
+    "name": "lineage2.3.5",
+    "report_name": "2.3.5",
+    "use_ref_allele": false
+  },
+  "C4206602T": {
+    "name": "lineage1.1.6.6",
+    "report_name": "1.1.6.6",
+    "use_ref_allele": false
+  },
+  "C4224421T": {
+    "name": "lineage2.1.2.3",
+    "report_name": "2.1.2.3",
+    "use_ref_allele": false
+  },
+  "C4284008T": {
+    "name": "lineage1.2.2.5.4",
+    "report_name": "1.2.2.5.4",
+    "use_ref_allele": false
+  },
+  "C4290237T": {
+    "name": "lineage1.2.2.5.13",
+    "report_name": "1.2.2.5.13",
+    "use_ref_allele": false
+  },
+  "C4299507T": {
+    "name": "lineage3.2.1.5",
+    "report_name": "3.2.1.5",
+    "use_ref_allele": false
+  },
+  "C945887T": {
+    "name": "lineage4.2",
+    "report_name": "4.2",
+    "use_ref_allele": false
+  },
+  "C946424A": {
+    "name": "lineage2.1.2.6",
+    "report_name": "2.1.2.6",
+    "use_ref_allele": false
+  },
+  "C946560T": {
+    "name": "lineage2.1.2.7",
+    "report_name": "2.1.2.7",
+    "use_ref_allele": false
+  },
+  "C950675T": {
+    "name": "lineage2.1.2.1",
+    "report_name": "2.1.2.1",
+    "use_ref_allele": false
+  },
+  "G1004426A": {
+    "name": "lineage2.1.2.7.1",
+    "report_name": "2.1.2.7.1",
+    "use_ref_allele": false
+  },
+  "G103277A": {
+    "name": "lineage2.1",
+    "report_name": "2.1",
+    "use_ref_allele": false
+  },
+  "G1139052A": {
+    "name": "lineage1.1.5",
+    "report_name": "1.1.5",
+    "use_ref_allele": false
+  },
+  "G1263286T": {
+    "name": "lineage1.1.6.1",
+    "report_name": "1.1.6.1",
+    "use_ref_allele": false
+  },
+  "G1263496A": {
+    "name": "lineage2.3.8",
+    "report_name": "2.3.8",
+    "use_ref_allele": false
+  },
+  "G1282080A": {
+    "name": "lineage1.2.2.5.10",
+    "report_name": "1.2.2.5.10",
+    "use_ref_allele": false
+  },
+  "G1558463A": {
+    "name": "lineage7.3.1",
+    "report_name": "7.3.1",
+    "use_ref_allele": false
+  },
+  "G168471A": {
+    "name": "lineage4.4",
+    "report_name": "4.4",
+    "use_ref_allele": false
+  },
+  "G1863838A": {
+    "name": "lineage3.1",
+    "report_name": "3.1",
+    "use_ref_allele": false
+  },
+  "G1900068A": {
+    "name": "lineage4.1",
+    "report_name": "4.1",
+    "use_ref_allele": false
+  },
+  "G2028842A": {
+    "name": "lineage1.2.2.5.3",
+    "report_name": "1.2.2.5.3",
+    "use_ref_allele": false
+  },
+  "G2118665T": {
+    "name": "lineage3.2.1.5.4",
+    "report_name": "3.2.1.5.4",
+    "use_ref_allele": false
+  },
+  "G2132968A": {
+    "name": "lineage3.1.1",
+    "report_name": "3.1.1",
+    "use_ref_allele": false
+  },
+  "G2333700A": {
+    "name": "lineage2.3.8.3",
+    "report_name": "2.3.8.3",
+    "use_ref_allele": false
+  },
+  "G2400455T": {
+    "name": "lineage1.2.2.5.7",
+    "report_name": "1.2.2.5.7",
+    "use_ref_allele": false
+  },
+  "G2449467A": {
+    "name": "lineage1.1.4.1",
+    "report_name": "1.1.4.1",
+    "use_ref_allele": false
+  },
+  "G2496275T": {
+    "name": "lineage3.2.1.1",
+    "report_name": "3.2.1.1",
+    "use_ref_allele": false
+  },
+  "G2516743A": {
+    "name": "lineage1.1.4",
+    "report_name": "1.1.4",
+    "use_ref_allele": false
+  },
+  "G2608463A": {
+    "name": "lineage1.1.3.2",
+    "report_name": "1.1.3.2",
+    "use_ref_allele": false
+  },
+  "G2612381A": {
+    "name": "lineage3.2.1.5.1",
+    "report_name": "3.2.1.5.1",
+    "use_ref_allele": false
+  },
+  "G2704138A": {
+    "name": "lineage1.1.2",
+    "report_name": "1.1.2",
+    "use_ref_allele": false
+  },
+  "G2704273A": {
+    "name": "lineage1.1.6.4",
+    "report_name": "1.1.6.4",
+    "use_ref_allele": false
+  },
+  "G2747235T": {
+    "name": "lineage2.3.6.2",
+    "report_name": "2.3.6.2",
+    "use_ref_allele": false
+  },
+  "G2751242A": {
+    "name": "lineage3.2.1.5.3",
+    "report_name": "3.2.1.5.3",
+    "use_ref_allele": false
+  },
+  "G2797050A": {
+    "name": "lineage2.3.6.1",
+    "report_name": "2.3.6.1",
+    "use_ref_allele": false
+  },
+  "G2927032T": {
+    "name": "lineage1.2.2.5.11",
+    "report_name": "1.2.2.5.11",
+    "use_ref_allele": false
+  },
+  "G3246505A": {
+    "name": "lineage1.1.6.7",
+    "report_name": "1.1.6.7",
+    "use_ref_allele": false
+  },
+  "G3288659A": {
+    "name": "lineage4.3",
+    "report_name": "4.3",
+    "use_ref_allele": false
+  },
+  "G3339945A": {
+    "name": "lineage2.3.6",
+    "report_name": "2.3.6",
+    "use_ref_allele": false
+  },
+  "G3385479C": {
+    "name": "lineage6.3.1",
+    "report_name": "6.3.1",
+    "use_ref_allele": false
+  },
+  "G3424494A": {
+    "name": "lineage1.1.6",
+    "report_name": "1.1.6",
+    "use_ref_allele": false
+  },
+  "G3427820A": {
+    "name": "lineage2.2.1",
+    "report_name": "2.2.1",
+    "use_ref_allele": false
+  },
+  "G3429184T": {
+    "name": "lineage7.3",
+    "report_name": "7.3",
+    "use_ref_allele": false
+  },
+  "G3436731A": {
+    "name": "lineage1.2.1",
+    "report_name": "1.2.1",
+    "use_ref_allele": false
+  },
+  "G3441175A": {
+    "name": "lineage2.2",
+    "report_name": "2.2",
+    "use_ref_allele": false
+  },
+  "G3441631A": {
+    "name": "lineage3",
+    "report_name": "3",
+    "use_ref_allele": true
+  },
+  "G3505385A": {
+    "name": "lineage2.3.7",
+    "report_name": "2.3.7",
+    "use_ref_allele": false
+  },
+  "G3505565A": {
+    "name": "lineage7.2",
+    "report_name": "7.2",
+    "use_ref_allele": false
+  },
+  "G3505826A": {
+    "name": "lineage7.3.2",
+    "report_name": "7.3.2",
+    "use_ref_allele": false
+  },
+  "G3819775A": {
+    "name": "lineage1.1.5.1",
+    "report_name": "1.1.5.1",
+    "use_ref_allele": false
+  },
+  "G3925718T": {
+    "name": "lineage6.2",
+    "report_name": "6.2",
+    "use_ref_allele": false
+  },
+  "G3975289A": {
+    "name": "lineage5",
+    "report_name": "5",
+    "use_ref_allele": false
+  },
+  "G4015174A": {
+    "name": "lineage7.1",
+    "report_name": "7.1",
+    "use_ref_allele": false
+  },
+  "G4261903A": {
+    "name": "lineage1.2.2.5.12",
+    "report_name": "1.2.2.5.12",
+    "use_ref_allele": false
+  },
+  "G4291048A": {
+    "name": "lineage3.2.1.3",
+    "report_name": "3.2.1.3",
+    "use_ref_allele": false
+  },
+  "G432724A": {
+    "name": "lineage1.2.2",
+    "report_name": "1.2.2",
+    "use_ref_allele": false
+  },
+  "G585559A": {
+    "name": "lineage2.3.3.3",
+    "report_name": "2.3.3.3",
+    "use_ref_allele": false
+  },
+  "G946817A": {
+    "name": "lineage2",
+    "report_name": "2",
+    "use_ref_allele": false
+  },
+  "G95468A": {
+    "name": "lineage2.3.1",
+    "report_name": "2.3.1",
+    "use_ref_allele": false
+  },
+  "G97578T": {
+    "name": "lineage1.1.6.3",
+    "report_name": "1.1.6.3",
+    "use_ref_allele": false
+  },
+  "T103799C": {
+    "name": "lineage2.1.2.2",
+    "report_name": "2.1.2.2",
+    "use_ref_allele": false
+  },
+  "T1205728C": {
+    "name": "lineage1.1.3",
+    "report_name": "1.1.3",
+    "use_ref_allele": false
+  },
+  "T1263358G": {
+    "name": "lineage2.1.1",
+    "report_name": "2.1.1",
+    "use_ref_allele": false
+  },
+  "T1750394G": {
+    "name": "lineage1.1.6.5",
+    "report_name": "1.1.6.5",
+    "use_ref_allele": false
+  },
+  "T182274G": {
+    "name": "lineage1.2.2.2",
+    "report_name": "1.2.2.2",
+    "use_ref_allele": false
+  },
+  "T1864018C": {
+    "name": "lineage3.2.1.2",
+    "report_name": "3.2.1.2",
+    "use_ref_allele": false
+  },
+  "T224606A": {
+    "name": "lineage8",
+    "report_name": "8",
+    "use_ref_allele": false
+  },
+  "T2411613C": {
+    "name": "lineage2.3.3.2",
+    "report_name": "2.3.3.2",
+    "use_ref_allele": false
+  },
+  "T3425924C": {
+    "name": "lineage3.2.1.5.5.1",
+    "report_name": "3.2.1.5.5.1",
+    "use_ref_allele": false
+  },
+  "T349740C": {
+    "name": "lineage1.2.2.5.5",
+    "report_name": "1.2.2.5.5",
+    "use_ref_allele": false
+  },
+  "T3926594G": {
+    "name": "lineage2.3",
+    "report_name": "2.3",
+    "use_ref_allele": false
+  },
+  "T4162024C": {
+    "name": "lineage3.2.1.5.5",
+    "report_name": "3.2.1.5.5",
+    "use_ref_allele": false
+  },
+  "T4197938C": {
+    "name": "lineage5.2",
+    "report_name": "5.2",
+    "use_ref_allele": false
+  },
+  "T4291879C": {
+    "name": "lineage5.1",
+    "report_name": "5.1",
+    "use_ref_allele": false
+  },
+  "T775772A": {
+    "name": "lineage1.2.2.5.8",
+    "report_name": "1.2.2.5.8",
+    "use_ref_allele": false
+  },
+  "T800490A": {
+    "name": "lineage6.3.2.1",
+    "report_name": "6.3.2.1",
+    "use_ref_allele": false
+  },
+  "T945905A": {
+    "name": "lineage6",
+    "report_name": "6",
+    "use_ref_allele": false
+  }
+}
