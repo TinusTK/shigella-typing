@@ -121,6 +121,12 @@ via *Workflows > Import*): `workflows/shigella_typing_separate.gxwf.yml`
 Both take a reads collection and an assemblies collection; plug in your
 own assembler.
 
+**Releases.** When a version bump in `tool/macros.xml` reaches `main`, the
+Release workflow (`.github/workflows/release.yml`) tests the bundle, tags
+the version, creates the GitHub release (notes from `CHANGELOG.md`) and
+publishes to the Tool Shed as `tinustk/shigella_typing`. Galaxy servers
+install the new version from there.
+
 ## Running without Galaxy
 
 ```

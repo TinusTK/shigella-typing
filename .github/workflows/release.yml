@@ -1,0 +1,97 @@
+name: Release
+
+# Runs when a change to tool/macros.xml reaches main (for example a merged
+# update pull request that bumps @TOOL_VERSION@ or @VERSION_SUFFIX@), or by
+# hand from the Actions tab. If that version has no tag yet, it:
+#   1. bundles the tool (wrappers, package, panels, test data),
+#   2. lints and tests it with planemo on Galaxy release_25.1,
+#   3. tags the version and creates a GitHub release with the bundle attached
+#      and the notes from CHANGELOG.md,
+#   4. publishes to the Galaxy Tool Shed (if the TOOLSHED_API_KEY secret is set).
+# A version that is already tagged is skipped, so other macros.xml edits do
+# nothing.
+on:
+  push:
+    branches: [main]
+    paths: [tool/macros.xml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read the version
+        id: version
+        run: |
+          VER=$(sed -n 's|.*<token name="@TOOL_VERSION@">\(.*\)</token>.*|\1|p' tool/macros.xml)
+          SUFFIX=$(sed -n 's|.*<token name="@VERSION_SUFFIX@">\(.*\)</token>.*|\1|p' tool/macros.xml)
+          PKG=$(sed -n 's|^__version__ = "\(.*\)"$|\1|p' tool/shigella_typing/__init__.py)
+          if [ "$VER" != "$PKG" ]; then
+            echo "::error::macros.xml says $VER but shigella_typing says $PKG"; exit 1
+          fi
+          if [ "$SUFFIX" = "0" ]; then TAG="v$VER"; else TAG="v$VER-galaxy$SUFFIX"; fi
+          echo "ver=$VER" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "shed=$VER+galaxy$SUFFIX" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null; then
+            echo "new=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::$TAG is already tagged - nothing to release"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.version.outputs.new == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Bundle the tool
+        if: steps.version.outputs.new == 'true'
+        run: bash scripts/bundle_tool.sh
+
+      - name: Lint and test
+        if: steps.version.outputs.new == 'true'
+        run: |
+          pip install planemo edam-ontology
+          planemo lint --fail_level warn build/shigella_typing
+          planemo shed_lint --tools build/shigella_typing
+          planemo test --galaxy_branch release_25.1 --conda_auto_init --conda_auto_install \
+              --test_output build/planemo_report.html build/shigella_typing
+
+      - name: Tag and create the GitHub release
+        if: steps.version.outputs.new == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VER: ${{ steps.version.outputs.ver }}
+          SHED: ${{ steps.version.outputs.shed }}
+        run: |
+          awk -v v="$VER" 'index($0, "## " v " ") == 1 {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
+          grep -q . notes.md || { echo "::error::no CHANGELOG.md entry for $VER"; exit 1; }
+          echo "Galaxy tool version **$SHED**. Tool tests passed (report attached)." >> notes.md
+          tar -czf "shigella_typing-$TAG.tar.gz" -C build shigella_typing
+          gh release create "$TAG" "shigella_typing-$TAG.tar.gz" build/planemo_report.html \
+              --target "$GITHUB_SHA" --title "shigella-typing $VER" --notes-file notes.md
+
+      - name: Publish to the Galaxy Tool Shed
+        if: steps.version.outputs.new == 'true'
+        env:
+          TOOLSHED_API_KEY: ${{ secrets.TOOLSHED_API_KEY }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if [ -z "$TOOLSHED_API_KEY" ]; then
+            echo "::warning::TOOLSHED_API_KEY not set - skipping Tool Shed publish"; exit 0
+          fi
+          planemo shed_update build/shigella_typing \
+              --shed_target toolshed \
+              --shed_key "$TOOLSHED_API_KEY" \
+              --force_repository_creation \
+              --check_diff \
+              --message "$TAG"
