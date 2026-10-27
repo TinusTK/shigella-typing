@@ -1,0 +1,46 @@
+run	ena_organism	ena_serotype	expected_mykrobe_scheme	published_genotype	published_qrdr	source
+DRR015999	Shigella flexneri 1b		flexneri	-	-	ENA metadata only
+DRR016000	Shigella flexneri 2a		flexneri	-	-	ENA metadata only
+DRR016003	Shigella flexneri 3b		flexneri	-	-	ENA metadata only
+DRR016005	Shigella flexneri 4a		flexneri	-	-	ENA metadata only
+DRR016010	Shigella flexneri Y	Y	flexneri	-	-	ENA metadata only
+ERR10388474	Shigella flexneri	6	none matched	-	-	ENA metadata only
+ERR11597010	Shigella boydii	20	none matched	-	-	ENA metadata only
+ERR11597011	Shigella boydii	10	none matched	-	-	ENA metadata only
+ERR15002192	Shigella dysenteriae	3	none matched	-	-	ENA metadata only
+ERR1762055	Shigella flexneri 4c	Shigella flexneri 4c	flexneri	-	-	ENA metadata only
+ERR2287282	Shigella dysenteriae	8	none matched	-	-	ENA metadata only
+ERR2300646	Shigella flexneri	Yv	flexneri	6.3.2	none	Flex-It media-2 (van den Beld 2018); Flex-It ShigaPass call Xv
+ERR279287	Shigella dysenteriae	Sd1	none matched	-	-	ENA metadata only
+ERR3331010	Shigella flexneri	4av	flexneri	1.1.6	none	Flex-It media-2 (van den Beld 2020); Flex-It ShigaPass call 4a
+ERR4425640	Shigella dysenteriae	Shigella PROVA 3162-96	none matched	-	-	ENA metadata only
+ERR477378	Shigella flexneri	5a	flexneri	5.2	none	Flex-It media-2 (Rossi 2015); Flex-It ShigaPass call 5a
+ERR6004653	Shigella flexneri	S. flexneri X	none matched	-	-	ENA says S. flexneri X, but the assembly has no ipaH; expected set after ShigaPass
+SRR1811640	Shigella boydii	SB16:H9	none matched	-	-	ENA metadata only
+SRR1811641	Shigella dysenteriae	SD11:H45	none matched	-	-	ENA metadata only
+SRR1811688	Shigella boydii ATCC 9905	SB7:H14	none matched	-	-	ENA metadata only
+SRR28158641	Shigella boydii	3	none matched	-	-	ENA metadata only
+SRR28158810	Shigella flexneri	1A	flexneri	-	-	ENA metadata only
+SRR28424797	Shigella dysenteriae	4	none matched	-	-	ENA metadata only
+SRR28576419	Shigella flexneri	5b	flexneri	-	-	ENA metadata only
+SRR29077623	Shigella dysenteriae	14	none matched	-	-	ENA metadata only
+SRR29077757	Shigella dysenteriae	9	none matched	-	-	ENA metadata only
+SRR29548349	Shigella boydii	5	none matched	-	-	ENA metadata only
+SRR2994189	Shigella dysenteriae	5	none matched	-	-	ENA metadata only
+SRR2994194	Shigella boydii	12	none matched	-	-	ENA metadata only
+SRR2994201	Shigella dysenteriae	13	none matched	-	-	ENA metadata only
+SRR30358953	Shigella boydii	11	none matched	-	-	ENA metadata only
+SRR30764594	Shigella dysenteriae	12	none matched	-	-	ENA metadata only
+SRR30970883	Shigella boydii	19	none matched	-	-	ENA metadata only
+SRR31034872	Shigella boydii	14	none matched	-	-	ENA metadata only
+SRR31702296	Shigella boydii	6	none matched	-	-	ENA metadata only
+SRR33012337	Shigella boydii	4	none matched	-	-	ENA metadata only
+SRR33421300	Shigella dysenteriae	2	none matched	-	-	ENA metadata only
+SRR33519932	Shigella boydii	18	none matched	-	-	ENA metadata only
+SRR33609559	Shigella boydii	8	none matched	-	-	ENA metadata only
+SRR33876493	Shigella boydii	2	none matched	-	-	ENA metadata only
+SRR33913210	Shigella sonnei	:H16	sonnei	-	-	ENA metadata only
+SRR4179879	Shigella boydii	15	none matched	-	-	ENA metadata only
+SRR4180826	Shigella boydii	17	none matched	-	-	ENA metadata only
+SRR4181342	Shigella boydii	9	none matched	-	-	ENA metadata only
+SRR4181518	Shigella boydii	13	none matched	-	-	ENA metadata; S. boydii 13 is now Escherichia albertii

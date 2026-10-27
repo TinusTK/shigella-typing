@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Docs: Mykrobe's `Not E. coli/Shigella` call on some *S. boydii* /
+  *S. dysenteriae* is explained in the README and the Mykrobe tool help.
+- Validation: 45 more public runs through all three tools, 45/45 as
+  expected (`validation/PHASE0.md`, `validation/set45_*.tsv`).
+
 ## 1.0.0 (2026-10-27)
 
 First release: three Galaxy tools and a standalone command for *Shigella*

@@ -63,7 +63,11 @@ the assemblies and the reads and gives the same combined report.
 ## Validation
 
 Mykrobe 0.13.0 with the bundled panels was checked against published
-genotypes for 19 public read sets: see [`validation/PHASE0.md`](validation/PHASE0.md).
+genotypes for 19 public read sets, and all three tools were run the Galaxy
+way on 45 more public runs (mostly *S. boydii* and *S. dysenteriae*): every
+run gave the expected result. See [`validation/PHASE0.md`](validation/PHASE0.md)
+and the full report in
+[`validation/set45_combined_report.tsv`](validation/set45_combined_report.tsv).
 Resource use per sample (CPU, memory, runtime) is in
 [`validation/PHASE6.md`](validation/PHASE6.md).
 
@@ -156,6 +160,10 @@ One sample per run (paired, single-end, or `--ont`). Writes
 keeps the one whose species coverage reaches the mykrobeshig threshold
 (*S. sonnei* 90, *S. flexneri* 85.5); otherwise `none matched` with
 Mykrobe's species call (`Unknown E. coli/Shigella` or `Not E. coli/Shigella`).
+`Not E. coli/Shigella` means the reads also missed Mykrobe's E. coli/Shigella
+check; this happens with some *S. boydii* and *S. dysenteriae* (the panels
+are built for *S. sonnei* and *S. flexneri*), so trust ShigaPass's species
+call for these.
 QRDR mutations (`qrdr_mutations`, `num_qrdr`) are genotypic markers;
 `cipro_prediction` is `no QRDR mutations`, `QRDR mutation(s): reduced
 susceptibility likely` (1-2) or `QRDR triple mutant: resistance likely` (3+),

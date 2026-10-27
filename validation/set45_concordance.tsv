@@ -1,0 +1,46 @@
+run	ena_organism	ena_serotype	shigapass_species	shigapass_serotype	expected_scheme	mykrobe_scheme	mykrobe_species_call	published_genotype	mykrobe_genotype	qrdr_mutations	scheme_match	genotype_match
+DRR015999	Shigella flexneri 1b		S. flexneri	S. flexneri 1b	flexneri	flexneri	S. flexneri	-	1.2.2	none	yes	-
+DRR016000	Shigella flexneri 2a		S. flexneri	S. flexneri 2a	flexneri	flexneri	S. flexneri	-	3.2	none	yes	-
+DRR016003	Shigella flexneri 3b		S. flexneri	S. flexneri 5b	flexneri	flexneri	S. flexneri	-	2.1.2	none	yes	-
+DRR016005	Shigella flexneri 4a		S. flexneri	S. flexneri 4a	flexneri	flexneri	S. flexneri	-	1.1.6.1	none	yes	-
+DRR016010	Shigella flexneri Y	Y	S. flexneri	S. flexneri 3a	flexneri	flexneri	S. flexneri	-	3.2	none	yes	-
+ERR10388474	Shigella flexneri	6	S. flexneri	S. flexneri 6	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+ERR11597010	Shigella boydii	20	S. boydii	S. boydii 20	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+ERR11597011	Shigella boydii	10	S. boydii	S. boydii 10	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+ERR15002192	Shigella dysenteriae	3	EIEC	-	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+ERR1762055	Shigella flexneri 4c	Shigella flexneri 4c	S. flexneri	S. flexneri Xv	flexneri	flexneri	S. flexneri	-	3.1.1.1	none	yes	-
+ERR2287282	Shigella dysenteriae	8	S. dysenteriae	S. dysenteriae 8	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+ERR2300646	Shigella flexneri	Yv	S. flexneri	S. flexneri Xv	flexneri	flexneri	S. flexneri	6.3.2	6.3.2	none	yes	yes
+ERR279287	Shigella dysenteriae	Sd1	S. dysenteriae	S. dysenteriae 1	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+ERR3331010	Shigella flexneri	4av	S. flexneri	S. flexneri 4av	flexneri	flexneri	S. flexneri	1.1.6	1.1.6	none	yes	yes
+ERR4425640	Shigella dysenteriae	Shigella PROVA 3162-96	S. dysenteriae	S. dysenteriae 16	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+ERR477378	Shigella flexneri	5a	S. flexneri	S. flexneri 5a	flexneri	flexneri	S. flexneri	5.2	5.2	none	yes	yes
+ERR6004653	Shigella flexneri	S. flexneri X	Not Shigella/EIEC	-	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+SRR1811640	Shigella boydii	SB16:H9	S. boydii	S. boydii 16	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR1811641	Shigella dysenteriae	SD11:H45	S. dysenteriae	S. dysenteriae 11	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR1811688	Shigella boydii ATCC 9905	SB7:H14	S. boydii	S. boydii 7	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR28158641	Shigella boydii	3	EIEC	-	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR28158810	Shigella flexneri	1A	S. flexneri	S. flexneri 1c(7a)	flexneri	flexneri	S. flexneri	-	1.2.2.5.6	none	yes	-
+SRR28424797	Shigella dysenteriae	4	S. dysenteriae	S. dysenteriae 4	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR28576419	Shigella flexneri	5b	S. flexneri	S. flexneri 5b	flexneri	flexneri	S. flexneri	-	2.1.2.7.1	gyrA_S83L;parC_S80I	yes	-
+SRR29077623	Shigella dysenteriae	14	S. dysenteriae	S. dysenteriae 14	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR29077757	Shigella dysenteriae	9	S. dysenteriae	S. dysenteriae 9	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR29548349	Shigella boydii	5	S. boydii	S. boydii 5	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR2994189	Shigella dysenteriae	5	S. dysenteriae	S. dysenteriae 5	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR2994194	Shigella boydii	12	S. dysenteriae	S. dysenteriae 2	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+SRR2994201	Shigella dysenteriae	13	S. dysenteriae	S. dysenteriae 13	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR30358953	Shigella boydii	11	S. boydii	S. boydii 11	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+SRR30764594	Shigella dysenteriae	12	S. dysenteriae	S. dysenteriae 12	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR30970883	Shigella boydii	19	S. boydii	S. boydii 19	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR31034872	Shigella boydii	14	S. boydii	S. boydii 14	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR31702296	Shigella boydii	6	S. boydii	S. boydii 10	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR33012337	Shigella boydii	4	S. boydii	S. boydii 4	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+SRR33421300	Shigella dysenteriae	2	S. dysenteriae	S. dysenteriae 2	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+SRR33519932	Shigella boydii	18	S. boydii	S. boydii 18	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR33609559	Shigella boydii	8	S. boydii	S. boydii 8	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR33876493	Shigella boydii	2	S. boydii	S. boydii 2	none matched	none matched	Not E. coli/Shigella	-	-	-	yes	-
+SRR33913210	Shigella sonnei	:H16	S. sonnei	-	sonnei	sonnei	S. sonnei	-	3.6.1.1.2	gyrA_D87G;gyrA_S83L;parC_S80I	yes	-
+SRR4179879	Shigella boydii	15	S. boydii	S. boydii 15	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR4180826	Shigella boydii	17	S. dysenteriae	S. dysenteriae 3	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR4181342	Shigella boydii	9	S. boydii	S. boydii 9	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-
+SRR4181518	Shigella boydii	13	Not Shigella/EIEC	-	none matched	none matched	Unknown E. coli/Shigella	-	-	-	yes	-

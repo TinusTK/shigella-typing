@@ -1,6 +1,6 @@
 # Phase 0: Mykrobe 0.13.0 on reads
 
-Status: **public set 19/19 pass** (2026-10-27). Own isolates (D7) still to do.
+Status: **public set 19/19 pass**; **wider set (D7) 45/45 as expected** (2026-10-27).
 
 ## Public validation set (19 runs)
 
@@ -94,3 +94,44 @@ Runtime: 4–7 s wall, ~70 MB max RSS per sample per scheme (4 threads,
 3. Mykrobe JSON keys used: `phylogenetics.species`, `.phylo_group`,
    `.lineage.lineage`, `.lineage.calls_summary`, `.lineage.calls`,
    `susceptibility.ciprofloxacin.called_by`, `version.panel`.
+
+## Wider set (D7, 45 public runs, 2026-10-27)
+
+45 more public Illumina runs, mostly *S. boydii* and *S. dysenteriae* plus
+*S. flexneri* serotypes 1-6 and one *S. sonnei*, run the Galaxy Australia
+way with shigella-typing 1.0.0: reads to tool 2, Shovill assemblies of the
+same runs to tool 1, then combine. The assemblies are not in this
+repository; the reads are on SRA/ENA/DDBJ.
+
+- `set45_accessions.tsv`: each run with ENA organism/serotype, the expected
+  Mykrobe scheme and the published Flex-It genotype where one exists.
+- `set45_combined_report.tsv`: the full 30-column combined report.
+- `set45_concordance.tsv`: expected vs called, per run.
+
+| Check | Result |
+|---|---|
+| Mykrobe scheme vs expected | 45/45 (12 matched a scheme: 11 *S. flexneri* serotype 1-5, 1 *S. sonnei*; 33 none matched) |
+| Genotype vs published Flex-It (media-2) | 3/3 (6.3.2, 1.1.6, 5.2), no QRDR mutations in any |
+| *S. flexneri* 6 near the threshold | 84.7 vs 85.5, borderline warning given as designed |
+
+The expected scheme follows the ENA metadata, with one exception:
+ERR6004653 is *S. flexneri* X in ENA, but its assembly has no *ipaH* and
+Mykrobe finds no E. coli/Shigella markers either, so both tools say it is
+not *Shigella*. Where ENA and ShigaPass disagree on serotype (10 runs, see
+the concordance file), the Mykrobe outcome is the same either way.
+
+QRDR mutations found: one *S. flexneri* 5b (`gyrA_S83L;parC_S80I`) and the
+*S. sonnei* (CipR.MSM5, `gyrA_D87G;gyrA_S83L;parC_S80I`).
+
+**`Not E. coli/Shigella` on real *Shigella* (finding 7 confirmed).** Six
+runs (*S. dysenteriae* 1 and 2, *S. boydii* 2, 4 and 11) fall below
+Mykrobe's E. coli/Shigella phylogroup cut-off (coverage -1 at every level),
+which mykrobeshig labels `Not E. coli/Shigella`. Their reads match their
+assemblies (94-98% of sampled read k-mers), so the input is right; the
+panels are built for *S. sonnei* and *S. flexneri* only. ShigaPass's species
+call is the one to trust; combine says "No Mykrobe genotyping scheme for
+..." for them, and the README says so.
+
+Runtime: Mykrobe 4-26 s per sample (4 threads, 2 at once); ShigaPass 378 s
+for all 45 assemblies (1 job, 4 threads; these assemblies have 860-6374
+contigs each).

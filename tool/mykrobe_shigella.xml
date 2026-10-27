@@ -165,6 +165,10 @@ element.
   coverage reaches the mykrobeshig threshold (*S. sonnei* 90, *S. flexneri*
   85.5). If neither does, the scheme is ``none matched`` and Mykrobe's species
   call (``Unknown E. coli/Shigella`` or ``Not E. coli/Shigella``) is reported.
+  ``Not E. coli/Shigella`` means the reads also missed Mykrobe's
+  E. coli/Shigella check; this happens with some *S. boydii* and
+  *S. dysenteriae* (the panels are built for *S. sonnei* and *S. flexneri*),
+  so trust ShigaPass's species call for these.
 - ``sonnei`` / ``flexneri`` run one scheme only.
 
 A warning is added when species coverage is within 1 point of a threshold.
