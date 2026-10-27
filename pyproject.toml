@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shigella-typing"
+dynamic = ["version"]
+description = "Shigella typing: ShigaPass serotyping of assemblies, Mykrobe Sonneityping/Flex-It genotyping and QRDR calls from reads, and a combined report"
+readme = "README.md"
+license = {text = "GPL-3.0-or-later"}
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+shigella-typing = "shigella_typing.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "tool"}
+packages = ["shigella_typing"]
+
+[tool.setuptools.dynamic]
+version = {attr = "shigella_typing.__version__"}

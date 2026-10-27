@@ -1,0 +1,15 @@
+.DS_Store
+# Private: never published
+Local/
+Sessions/
+CLAUDE.md
+*memory.md
+
+# Full-size validation reads/assemblies: local only, too big for GitHub
+validation/data/
+
+# Build and Python artefacts
+build/
+*.egg-info/
+__pycache__/
+*.pyc

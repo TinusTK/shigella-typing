@@ -1,0 +1,34 @@
+# Single source of truth for every upstream pin (plan Phase 9: the yearly /
+# manual update check compares upstream against this file and opens a PR).
+# Checked 2026-10-27.
+
+mykrobe:
+  source: bioconda
+  version: "0.13.0"
+  repo: https://github.com/Mykrobe-tools/mykrobe
+
+shigapass:
+  source: bioconda
+  version: "1.5.0"
+  repo: https://github.com/imanyass/ShigaPass
+  upstream_main_sha: null        # Phase 2: compare bioconda with upstream main
+
+blast:
+  source: bioconda
+  version: "2.17.0"              # Phase 2: confirm ShigaPass works with it
+  informational_only: true
+
+mykrobeshig:
+  source: vendored               # tool/shigella_typing/mykrobeshig (Phase 4)
+  repo: https://github.com/ShigellaGenomics/mykrobeshig
+  sha: 4c7521b9fa84f931bf86e39c14cc6f2880a45775
+
+panels:                          # bundled in panels/ (Phase 2)
+  manifest: https://raw.githubusercontent.com/Mykrobe-tools/mykrobe-data/main/mykrobe_panels_manifest.json
+  sonnei:
+    version: "20210201"
+    url: https://ndownloader.figshare.com/files/26274424
+  flexneri:
+    version: "20250902"
+    url: https://ndownloader.figshare.com/files/63190870
+    sha256: 2a070cde2c7d3b49de667bea86535cae4298e9d5dd78d9dc3d3f478c9afbed07

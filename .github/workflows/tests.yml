@@ -1,0 +1,42 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  unit:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Install and run the command
+        run: |
+          pip install .
+          shigella-typing --version
+
+  planemo-lint:
+    name: Galaxy wrapper lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check wrappers exist
+        id: xml
+        run: |
+          if ls tool/*.xml >/dev/null 2>&1; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "ready=false" >> "$GITHUB_OUTPUT";
+               echo "::notice::Skipping planemo lint - no Galaxy wrappers yet"; fi
+      - uses: actions/setup-python@v5
+        if: steps.xml.outputs.ready == 'true'
+        with:
+          python-version: "3.12"
+      - name: planemo lint
+        if: steps.xml.outputs.ready == 'true'
+        run: |
+          pip install planemo
+          planemo lint --fail_level warn tool/

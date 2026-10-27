@@ -1,0 +1,13 @@
+name: shigella_typing
+owner: tinustk
+description: Shigella typing - ShigaPass serotyping, Mykrobe Sonneityping/Flex-It genotyping and QRDR, combined report
+categories:
+  - Sequence Analysis
+type: unrestricted
+long_description: |
+  Three tools for Shigella typing. ShigaPass typing predicts species and
+  serotype from assemblies. Mykrobe Shigella genotyping assigns S. sonnei
+  (Sonneityping) and S. flexneri (Flex-It) genotypes and gyrA/parC QRDR
+  mutations from reads, using bundled Mykrobe panels (no network needed).
+  Combine Shigella report joins the two with cross-check warnings.
+homepage_url: https://github.com/TinusTK/shigella-typing

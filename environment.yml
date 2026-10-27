@@ -1,0 +1,16 @@
+# Standalone environment for shigella-typing.
+#   conda env create -f environment.yml
+#   conda activate shigella-typing
+#   pip install .
+# Versions must match upstream_versions.yml and the Galaxy <requirements>.
+name: shigella-typing
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.10
+  - mykrobe=0.13.0
+  # Mykrobe 0.13.0 imports pkg_resources, which setuptools 81+ removed.
+  - setuptools<81
+  - shigapass=1.5.0
+  - blast=2.17.0

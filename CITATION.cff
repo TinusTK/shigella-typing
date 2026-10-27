@@ -1,0 +1,65 @@
+cff-version: 1.2.0
+message: >-
+  If you use shigella-typing, please cite the tools and schemes it runs
+  (listed under references), as well as this repository.
+title: shigella-typing
+type: software
+license: GPL-3.0-or-later
+repository-code: https://github.com/TinusTK/shigella-typing
+authors:
+  - name: TinusTK
+references:
+  - type: article
+    title: "ShigaPass: an in silico tool predicting Shigella serotypes from whole-genome sequencing assemblies"
+    authors:
+      - family-names: Yassine
+        given-names: Iman
+      - name: et al.
+    journal: Microbial Genomics
+    year: 2023
+    doi: 10.1099/mgen.0.000961
+  - type: article
+    title: "Antibiotic resistance prediction for Mycobacterium tuberculosis from genome sequence data with Mykrobe"
+    authors:
+      - family-names: Hunt
+        given-names: Martin
+      - name: et al.
+    journal: Wellcome Open Research
+    year: 2019
+    doi: 10.12688/wellcomeopenres.15603.1
+  - type: article
+    title: "Global population structure and genotyping framework for genomic surveillance of the major dysentery pathogen, Shigella sonnei"
+    authors:
+      - family-names: Hawkey
+        given-names: Jane
+      - name: et al.
+    journal: Nature Communications
+    year: 2021
+    doi: 10.1038/s41467-021-22700-4
+  - type: article
+    title: "Flex-It: a global standardised genotyping framework for Shigella flexneri"
+    authors:
+      - family-names: Hawkey
+        given-names: Jane
+      - name: et al.
+    journal: bioRxiv
+    year: 2026
+    doi: 10.64898/2026.04.17.719127
+  - type: article
+    title: "BLAST+: architecture and applications"
+    authors:
+      - family-names: Camacho
+        given-names: Christiam
+      - name: et al.
+    journal: BMC Bioinformatics
+    year: 2009
+    doi: 10.1186/1471-2105-10-421
+  - type: article
+    title: "Bioconda: sustainable and comprehensive software distribution for the life sciences"
+    authors:
+      - family-names: Grüning
+        given-names: Björn
+      - name: et al.
+    journal: Nature Methods
+    year: 2018
+    doi: 10.1038/s41592-018-0046-7
