@@ -6,6 +6,10 @@
   one isolated ShigaPass run per sample, `shigapass_report.tsv` with
   readable species/serotype and warnings; reproduces ShigaPass's example
   results (`validation/check_shigapass_examples.sh`).
+- `shigella-typing combine` (tool 3): joins the two reports with every
+  cross-check warning from the plan; `shigapass --with-mykrobe` (tool 1
+  toggle) and `run` give the same combined report
+  (`validation/PHASE5.md`).
 - `shigella-typing mykrobe` (tool 2): Mykrobe on reads with the bundled
   panels, `auto` scheme choice, vendored mykrobeshig (unchanged, commit
   4c7521b) for genotype and confidence, own QRDR parsing (fixes missing

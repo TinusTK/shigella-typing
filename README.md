@@ -88,6 +88,42 @@ is within 1 point of a threshold.
 Uses the bundled `panels/` (install with `pip install -e .` from a clone, or
 point `--panels-dir` / `SHIGELLA_TYPING_PANELS` at them). Never downloads.
 
+### Combine Shigella report
+
+```
+shigella-typing combine --shigapass out/shigapass_report.tsv \
+    --mykrobe out/*/mykrobe_report.tsv --outdir out/ [--strip-suffixes]
+```
+
+Joins the reports on `sample` (exact match; `--strip-suffixes` also ignores
+`.fasta`, `_contigs`, ...) and writes `out/shigella_typing_report.tsv`:
+ShigaPass columns, Mykrobe columns, one `warnings` column and versions.
+Cross-check warnings:
+
+| Situation | Warning |
+|---|---|
+| ShigaPass *S. sonnei*, Mykrobe *S. flexneri* (or the reverse) | `Discordant: ShigaPass <call>, Mykrobe <species> - check` |
+| ShigaPass *S. sonnei* / *S. flexneri* 1-5, Mykrobe none matched | `ShigaPass <call> but Mykrobe did not match the <scheme> scheme - check reads/assembly` |
+| ShigaPass Not Shigella/EIEC, Mykrobe *S. sonnei* / *S. flexneri* | `Discordant: ShigaPass Not Shigella/EIEC, Mykrobe <species> - check assembly` |
+| ShigaPass *S. boydii*, *S. dysenteriae*, *S. flexneri* 6 or EIEC, Mykrobe none matched | `No Mykrobe genotyping scheme for <species>; serotype only` (expected) |
+| ShigaPass Not Shigella/EIEC and Mykrobe Not E. coli/Shigella | `Not Shigella - check organism` |
+| Sample in one report only | `Missing from Mykrobe report` / `Missing from ShigaPass report` |
+| Duplicate sample names | error listing the duplicates |
+
+### All in one
+
+```
+shigella-typing shigapass --assembly A.fasta B.fasta --outdir out/ \
+    --with-mykrobe --reads-samplesheet reads.tsv        # reads.tsv: sample, r1, r2
+shigella-typing run --samplesheet samples.tsv --outdir out/   # sample, assembly, r1, r2
+```
+
+Both write the ShigaPass, Mykrobe and combined reports. Assemblies and reads
+are matched by sample name; a sample with only one of them still gets a row.
+Mykrobe tries the scheme matching the ShigaPass call first and runs the
+other one too if it does not match, so the result is the same as running
+the three tools separately (`validation/PHASE5.md`).
+
 ## Software and data used
 
 Please cite these if you use the tools:

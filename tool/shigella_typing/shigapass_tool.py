@@ -218,7 +218,7 @@ def warnings_for(fields):
 
 def failed_row(sample, reason):
     row = {c: "-" for c in SHIGAPASS_COLUMNS}
-    row.update(sample=sample, comments="", warnings=f"ShigaPass not run: {reason}")
+    row.update(sample=sample, warnings=f"ShigaPass not run: {reason}")
     return row
 
 
@@ -309,6 +309,15 @@ def type_assemblies(assemblies, names, threads=2, db=None, keep_work=None):
 # Command line (shigella-typing shigapass)
 # --------------------------------------------------------------------------
 
+def write_raw(outdir, raw_outputs, raw_summary, raw_flex):
+    if "summary" in raw_outputs:
+        with open(os.path.join(outdir, RAW_OUTPUTS["summary"]), "w") as fh:
+            fh.write("\n".join([SUMMARY_HEADER] + raw_summary) + "\n")
+    if "flex_summary" in raw_outputs:
+        with open(os.path.join(outdir, RAW_OUTPUTS["flex_summary"]), "w") as fh:
+            fh.write("".join(line + "\n" for line in raw_flex))
+
+
 def add_arguments(p):
     p.add_argument("--assembly", nargs="+", required=True, metavar="FASTA",
                    help="assembly FASTA file(s) (plain or gzipped)")
@@ -316,12 +325,23 @@ def add_arguments(p):
                    help="sample name for each assembly, in order "
                         "(default: file name without extension)")
     p.add_argument("--outdir", required=True, help="output folder")
-    p.add_argument("--threads", type=int, default=2, help="threads for BLAST (1-12, default 2)")
-    p.add_argument("--raw-outputs", nargs="*", default=[], choices=sorted(RAW_OUTPUTS),
-                   help="also write ShigaPass's own summary files")
+    p.add_argument("--threads", type=int, default=2, help="threads (BLAST: 1-12, default 2)")
+    p.add_argument("--raw-outputs", nargs="*", default=[],
+                   choices=sorted(RAW_OUTPUTS) + ["json", "predictresults"],
+                   help="also write the tools' own output files "
+                        "(json/predictresults only with --with-mykrobe)")
     p.add_argument("--shigapass-db", help="ShigaPass_DataBases folder "
                                           "(default: the one installed with ShigaPass)")
     p.add_argument("--keep-work", metavar="DIR", help="keep ShigaPass's work files in DIR")
+    g = p.add_argument_group("also run Mykrobe genotyping (needs reads)")
+    g.add_argument("--with-mykrobe", action="store_true",
+                   help="also genotype the reads with Mykrobe and write the combined report")
+    g.add_argument("--reads-samplesheet", metavar="TSV",
+                   help="reads per sample: TSV with header sample, r1, r2 (r2 empty for "
+                        "single-end/ONT); matched to assemblies by sample name")
+    g.add_argument("--ont", action="store_true", help="reads are Oxford Nanopore")
+    g.add_argument("--memory", default="2048MB", help="Mykrobe memory (default 2048MB)")
+    g.add_argument("--panels-dir", help="Mykrobe panels folder (default: bundled panels/)")
 
 
 def main(args):
@@ -331,16 +351,21 @@ def main(args):
     check_unique(names)
     os.makedirs(args.outdir, exist_ok=True)
 
+    if args.with_mykrobe:
+        from shigella_typing import pipeline
+        if not args.reads_samplesheet:
+            raise SystemExit("Error: --with-mykrobe needs --reads-samplesheet")
+        reads = {s: r for s, _, r in pipeline.read_samplesheet(args.reads_samplesheet)}
+        samples = [(n, a, reads.get(n, [])) for n, a in zip(names, args.assembly)]
+        samples += [(s, None, r) for s, r in reads.items() if s not in names]
+        pipeline.type_samples(samples, args.outdir, args.threads, args.ont, args.memory,
+                              args.panels_dir, args.shigapass_db, args.raw_outputs)
+        return 0
+
     rows, raw_summary, raw_flex = type_assemblies(
         args.assembly, names, args.threads, args.shigapass_db, args.keep_work)
-
     report = os.path.join(args.outdir, "shigapass_report.tsv")
     write_tsv(report, REPORT_COLUMNS, rows)
     log(f"wrote {report} ({len(rows)} samples)")
-    if "summary" in args.raw_outputs:
-        with open(os.path.join(args.outdir, RAW_OUTPUTS["summary"]), "w") as fh:
-            fh.write("\n".join([SUMMARY_HEADER] + raw_summary) + "\n")
-    if "flex_summary" in args.raw_outputs:
-        with open(os.path.join(args.outdir, RAW_OUTPUTS["flex_summary"]), "w") as fh:
-            fh.write("".join(line + "\n" for line in raw_flex))
+    write_raw(args.outdir, args.raw_outputs, raw_summary, raw_flex)
     return 0

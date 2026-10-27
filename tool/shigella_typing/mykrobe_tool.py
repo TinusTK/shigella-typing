@@ -119,6 +119,15 @@ def run_mykrobeshig(jsons, prefix):
     return rows, tsv, None
 
 
+def merge_tsvs(paths, dest):
+    """Concatenate TSVs with the same header (mykrobeshig output per scheme)."""
+    with open(dest, "w") as out:
+        for i, p in enumerate(paths):
+            with open(p) as fh:
+                lines = fh.readlines()
+            out.writelines(lines if i == 0 else lines[1:])
+
+
 def to_float(v):
     try:
         return float(v)
@@ -239,8 +248,12 @@ def run_mykrobe(sample, scheme, reads, ont, threads, memory, panels, workdir):
 
 
 def genotype_reads(sample, reads, scheme="auto", ont=False, threads=2, memory="2048MB",
-                   panels=None, keep_work=None, raw_dir=None, raw_outputs=()):
+                   panels=None, keep_work=None, raw_dir=None, raw_outputs=(), prefer=None):
     """Genotype one sample; return the report row.
+
+    prefer (with scheme 'auto'): run that scheme first and stop if it
+    matches; otherwise run the other one too, exactly as auto does. Tool 1's
+    toggle uses this to route by the ShigaPass call without changing results.
 
     Raw outputs asked for in raw_outputs are written to raw_dir:
     <sample>.<scheme>.json and mykrobeshig_predictResults.tsv.
@@ -248,7 +261,12 @@ def genotype_reads(sample, reads, scheme="auto", ont=False, threads=2, memory="2
     panels = find_panels(panels)
     reads = [os.path.abspath(r) for r in reads]  # Mykrobe runs inside the work folder
     version = mykrobe_version()
-    schemes = list(SCHEMES) if scheme == "auto" else [scheme]
+    if scheme != "auto":
+        schemes = [scheme]
+    elif prefer in SCHEMES:
+        schemes = [prefer] + [s for s in SCHEMES if s != prefer]
+    else:
+        schemes = list(SCHEMES)
     workdir = keep_work or tempfile.mkdtemp(prefix="mykrobe_")
     os.makedirs(workdir, exist_ok=True)
     try:
@@ -261,31 +279,29 @@ def genotype_reads(sample, reads, scheme="auto", ont=False, threads=2, memory="2
             # Mykrobe's mccortex fails on names with spaces etc.: give it a
             # safe name; the report keeps the real one.
             safe = re.sub(r"[^A-Za-z0-9._-]", "_", sample)
-            results, jsons = {}, []
+            results, tsvs = {}, []
             for s in schemes:
                 log(f"{sample}: mykrobe predict --species {s}")
                 path, error = run_mykrobe(safe, s, reads, ont, threads, memory, panels, workdir)
-                results[s] = {"error": error, "json_path": path}
+                r = results[s] = {"error": error, "json_path": path, "json": None, "msh": None}
                 if path:
-                    jsons.append(path)
-            if jsons:
-                rows, tsv, error = run_mykrobeshig(jsons, os.path.join(workdir, "mykrobeshig"))
-                for s, r in results.items():
-                    if not r["json_path"]:
-                        continue
+                    rows, tsv, error = run_mykrobeshig([path], os.path.join(workdir, f"mykrobeshig.{s}"))
                     if error:
                         r["error"] = f"mykrobeshig: {error}"
-                        continue
-                    r["json"] = load_json(r["json_path"])
-                    r["msh"] = rows.get((safe, s))
-                    if r["msh"] is None:
-                        r["error"] = "mykrobeshig gave no result"
-                if raw_dir and "json" in raw_outputs:
-                    for s, r in results.items():
-                        if r["json_path"]:
-                            shutil.copy(r["json_path"], os.path.join(raw_dir, f"{sample}.{s}.json"))
-                if raw_dir and "predictresults" in raw_outputs and tsv:
-                    shutil.copy(tsv, os.path.join(raw_dir, "mykrobeshig_predictResults.tsv"))
+                    else:
+                        tsvs.append(tsv)
+                        r["json"] = load_json(path)
+                        r["msh"] = rows.get((safe, s))
+                        if r["msh"] is None:
+                            r["error"] = "mykrobeshig gave no result"
+                if prefer and s == prefer and r["msh"] and r["msh"]["species"] == SCHEMES[s][0]:
+                    break  # routed scheme matched; the other cannot change the call
+            if raw_dir and "json" in raw_outputs:
+                for s, r in results.items():
+                    if r["json_path"]:
+                        shutil.copy(r["json_path"], os.path.join(raw_dir, f"{sample}.{s}.json"))
+            if raw_dir and "predictresults" in raw_outputs and tsvs:
+                merge_tsvs(tsvs, os.path.join(raw_dir, "mykrobeshig_predictResults.tsv"))
             row = decide(sample, results)
         row["mykrobe_version"] = version
         row["tool_version"] = __version__
