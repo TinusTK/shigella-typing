@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- End-to-end tests (all tools, tools chained, toggle, `run`) on small
+  public test data in `tool/test-data/`, rebuilt by
+  `validation/make_test_data.sh`; CI job with the conda environment.
+  Resource use per sample in `validation/PHASE6.md`.
 - `shigella-typing shigapass` (tool 1): ShigaPass typing of assemblies,
   one isolated ShigaPass run per sample, `shigapass_report.tsv` with
   readable species/serotype and warnings; reproduces ShigaPass's example

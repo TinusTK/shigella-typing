@@ -1,0 +1,17 @@
+label	wall_s	cpu_s	peak_rss_mb	exit_code
+shigapass ERR5976293 threads=1	11.5	11.2	114	0
+shigapass ERR5952732 threads=1	11.0	10.9	124	0
+shigapass ERR5888634 threads=1	10.1	9.9	128	0
+shigapass ERR5982186 threads=1	11.7	11.5	118	0
+shigapass ERR5976293 threads=4	8.3	10.8	131	0
+shigapass ERR5952732 threads=4	8.1	10.7	126	0
+shigapass ERR5888634 threads=4	8.5	10.9	126	0
+shigapass ERR5982186 threads=4	8.6	11.2	115	0
+mykrobe ERR5952732 threads=1	54.2	90.6	67	0
+mykrobe ERR5952732 threads=2	25.3	71.8	66	0
+mykrobe ERR5952732 threads=4	12.5	62.1	67	0
+mykrobe SRR4787878 threads=2	9.0	23.8	67	0
+mykrobe SRR8117834 threads=2	12.0	32.9	67	0
+mykrobe ERR5976293 threads=2	23.5	66.7	66	0
+mykrobe ERR047239 threads=2	30.7	89.3	66	0
+combine 4+5 reports	0.0	0.0	15	0

@@ -25,6 +25,20 @@ for other Mykrobe species use the IUC `mykrobe_predict` tool.
 
 Mykrobe 0.13.0 with the bundled panels was checked against published
 genotypes for 19 public read sets: see [`validation/PHASE0.md`](validation/PHASE0.md).
+Resource use per sample (CPU, memory, runtime) is in
+[`validation/PHASE6.md`](validation/PHASE6.md).
+
+## Tests
+
+```
+python -m unittest discover -s tests -v
+```
+
+Unit tests need only Python. The end-to-end tests run every tool, the three
+tools chained, the tool 1 toggle and `run` on the small public test data in
+`tool/test-data/` (cut-down assemblies and reads that give the same results
+as the full data); they need the conda environment and are skipped without
+it. CI runs both.
 
 ## Repository layout
 
@@ -34,7 +48,7 @@ tool/                    Galaxy wrappers, test-data and the Python package
   test-data/             public test data only
 panels/                  bundled Mykrobe panels (sonnei, flexneri)
 scripts/bundle_tool.sh   assembles build/shigella_typing/ for Galaxy / the Tool Shed
-tests/                   unit tests (python -m unittest discover -s tests)
+tests/                   unit and end-to-end tests (python -m unittest discover -s tests)
 validation/              validation scripts, expected results and write-up
 upstream_versions.yml    every upstream version pin
 environment.yml          conda environment for standalone use
