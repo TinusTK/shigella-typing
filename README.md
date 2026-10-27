@@ -49,6 +49,24 @@ pip install .
 shigella-typing --version
 ```
 
+### ShigaPass typing (assemblies)
+
+```
+shigella-typing shigapass --assembly A.fasta B.fasta.gz --outdir out/ [--threads 4] \
+    [--name A B] [--raw-outputs summary flex_summary]
+```
+
+Writes `out/shigapass_report.tsv`, one row per assembly (always, even if
+ShigaPass fails on one: the reason goes in `warnings`). Sample names are the
+file names without extensions unless `--name` is given. Columns: ShigaPass's
+own fields (`rfb`, `rfb_hits`, `rfb_pct`, `mlst_st`, `fliC`, `crispr`,
+`ipaH`, `predicted_serotype`, `predicted_flexserotype`, `comments`), readable
+`species_shigapass` / `serotype_shigapass`, `warnings`, and versions.
+`--raw-outputs` also writes ShigaPass's `ShigaPass_summary.csv` /
+`ShigaPass_Flex_summary.csv` (sample names restored).
+
+On macOS ShigaPass needs the GNU tools in `environment.yml`.
+
 ## Software and data used
 
 Please cite these if you use the tools:

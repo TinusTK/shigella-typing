@@ -15,13 +15,18 @@ Standard library only; ShigaPass, Mykrobe and BLAST+ are called as programs.
 import argparse
 import sys
 
-from shigella_typing import __version__
+from shigella_typing import __version__, shigapass_tool
 
 SUBCOMMANDS = {
     "shigapass": "ShigaPass typing of assemblies",
     "mykrobe": "Mykrobe Shigella genotyping of reads",
     "combine": "combine ShigaPass and Mykrobe reports with cross-check warnings",
     "run": "run all three steps from a samplesheet",
+}
+
+# Subcommands that are implemented: name -> module with add_arguments/main.
+IMPLEMENTED = {
+    "shigapass": shigapass_tool,
 }
 
 
@@ -34,7 +39,9 @@ def build_parser():
                         version=f"shigella-typing {__version__}")
     sub = parser.add_subparsers(dest="command", metavar="COMMAND")
     for name, text in SUBCOMMANDS.items():
-        sub.add_parser(name, help=text, description=text)
+        p = sub.add_parser(name, help=text, description=text)
+        if name in IMPLEMENTED:
+            IMPLEMENTED[name].add_arguments(p)
     return parser
 
 
@@ -44,6 +51,8 @@ def main(argv=None):
     if args.command is None:
         parser.print_help()
         return 1
+    if args.command in IMPLEMENTED:
+        return IMPLEMENTED[args.command].main(args)
     sys.stderr.write(f"shigella-typing {args.command}: not implemented yet\n")
     return 2
 
