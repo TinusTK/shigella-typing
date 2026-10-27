@@ -27,9 +27,11 @@ jobs:
         shell: bash -el {0}
     env:
       GH_TOKEN: ${{ github.token }}
-      WORK: ${{ runner.temp }}/update
     steps:
       - uses: actions/checkout@v4
+
+      - name: Work folder outside the checkout
+        run: echo "WORK=$RUNNER_TEMP/update" >> "$GITHUB_ENV"
 
       - name: Skip if an update pull request is already open
         id: open
