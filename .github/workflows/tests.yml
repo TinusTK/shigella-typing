@@ -70,8 +70,11 @@ jobs:
         if: steps.xml.outputs.ready == 'true'
         with:
           python-version: "3.12"
+      # Lint the bundle, not tool/: required_files lists panels/, which only
+      # sits next to the wrappers in the bundle
       - name: planemo lint
         if: steps.xml.outputs.ready == 'true'
         run: |
           pip install planemo
-          planemo lint --fail_level warn tool/
+          bash scripts/bundle_tool.sh
+          planemo lint --fail_level warn build/shigella_typing
