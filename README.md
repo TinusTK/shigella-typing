@@ -116,6 +116,11 @@ test it with `planemo test build/shigella_typing`.
 - **Combine Shigella report** takes the ShigaPass report and the Mykrobe
   reports (a collection is fine).
 
+The wrappers run the `shigella_typing` package and read the bundled panels
+from the tool directory. They list both in `<required_files>` (macro in
+`macros.xml`), so remote job runners such as Pulsar receive them too. If you
+add a file the tools need outside those two folders, add it there as well.
+
 Sample names are the collection element names, so keep them the same in
 the reads and assembly branches. Example workflows (Galaxy Format2, import
 via *Workflows > Import*): `workflows/shigella_typing_separate.gxwf.yml`

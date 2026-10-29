@@ -6,6 +6,7 @@
     <requirements>
         <expand macro="requirements_python"/>
     </requirements>
+    <expand macro="required_files"/>
     <expand macro="version_command"/>
     <command detect_errors="exit_code"><![CDATA[
 @CLI@ combine

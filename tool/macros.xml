@@ -1,7 +1,7 @@
 <macros>
     <!-- Versions must match upstream_versions.yml and environment.yml -->
     <token name="@TOOL_VERSION@">1.0.1</token>
-    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <token name="@PROFILE@">23.0</token>
     <token name="@SHIGAPASS_VERSION@">1.5.0</token>
     <token name="@MYKROBE_VERSION@">0.13.0</token>
@@ -33,6 +33,15 @@
 
     <xml name="version_command">
         <version_command>@CLI@ --version</version_command>
+    </xml>
+
+    <!-- Files from the tool directory that remote job runners (Pulsar) must
+         receive; Galaxy cannot find them from the command line. -->
+    <xml name="required_files">
+        <required_files>
+            <include path="shigella_typing/*" type="glob"/>
+            <include path="panels/*" type="glob"/>
+        </required_files>
     </xml>
 
     <!-- Reads input for tool 2 (one sample, mapped over collections) -->

@@ -73,8 +73,10 @@ jobs:
           VER: ${{ steps.version.outputs.ver }}
           SHED: ${{ steps.version.outputs.shed }}
         run: |
-          awk -v v="$VER" 'index($0, "## " v " ") == 1 {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
-          grep -q . notes.md || { echo "::error::no CHANGELOG.md entry for $VER"; exit 1; }
+          # A wrapper-only release (suffix > 0) has its own "## <ver>+galaxyN" entry
+          KEY="$VER"; [ "$SHED" = "$VER+galaxy0" ] || KEY="$SHED"
+          awk -v v="$KEY" 'index($0, "## " v " ") == 1 {on=1; next} /^## / {on=0} on' CHANGELOG.md > notes.md
+          grep -q . notes.md || { echo "::error::no CHANGELOG.md entry for $KEY"; exit 1; }
           echo "Galaxy tool version **$SHED**. Tool tests passed (report attached)." >> notes.md
           tar -czf "shigella_typing-$TAG.tar.gz" -C build shigella_typing
           gh release create "$TAG" "shigella_typing-$TAG.tar.gz" build/planemo_report.html \

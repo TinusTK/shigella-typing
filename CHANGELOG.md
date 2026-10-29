@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1+galaxy1 (2026-10-29)
+
+- Galaxy: the three wrappers now declare `<required_files>` (the
+  `shigella_typing` package and the bundled panels), so they also run on
+  remote job runners such as Pulsar. No change to the tools or results.
+
 ## 1.0.1 (2026-10-27)
 
 - Docs: Mykrobe's `Not E. coli/Shigella` call on some *S. boydii* /
