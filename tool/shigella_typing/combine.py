@@ -128,7 +128,7 @@ def combine_rows(sp_rows, my_rows, strip=False):
             row.update({c: sp[c] for c in SHIGAPASS_COLUMNS})
             row["shigapass_version"] = sp.get("shigapass_version", "-")
         if my:
-            row.update({c: my[c] for c in MYKROBE_COLUMNS})
+            row.update({c: my.get(c, "-") for c in MYKROBE_COLUMNS})
             row["mykrobe_version"] = my.get("mykrobe_version", "-")
             row["mykrobe_panel_version"] = my.get("mykrobe_panel_version", "-")
         row["sample"] = sample
@@ -172,7 +172,9 @@ def main(args):
     from shigella_typing.shigapass_tool import REPORT_COLUMNS as SP_REPORT
 
     sp_rows = read_reports(args.shigapass, SP_REPORT[:14], "ShigaPass")
-    my_rows = read_reports(args.mykrobe, MY_REPORT[:14], "Mykrobe")
+    # mykrobe_susceptibility is new in 1.0.2; older Mykrobe reports still combine
+    my_rows = read_reports(args.mykrobe, [c for c in MY_REPORT[:15] if c != "mykrobe_susceptibility"],
+                           "Mykrobe")
     os.makedirs(args.outdir, exist_ok=True)
     out = os.path.join(args.outdir, "shigella_typing_report.tsv")
     rows = write_combined(out, sp_rows, my_rows, args.strip_suffixes)

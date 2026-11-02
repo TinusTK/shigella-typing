@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.2 (2026-11-02)
+
+- New report column `mykrobe_susceptibility` (after `cipro_prediction`) in
+  the Mykrobe and combined reports: Mykrobe's own call as it writes it,
+  `ciprofloxacin: R/S` (*S. flexneri* panel) or `quinolones: R/S`
+  (*S. sonnei* panel), `-` when no scheme matched. Mykrobe report 17 -> 18
+  columns, combined report 30 -> 31. Combine still accepts Mykrobe reports
+  from 1.0.1 (the column is then `-`). Same requirements, so the same
+  containers.
+
 ## 1.0.1+galaxy1 (2026-10-29)
 
 - Galaxy: the three wrappers now declare `<required_files>` (the

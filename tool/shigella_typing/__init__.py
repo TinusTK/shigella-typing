@@ -4,4 +4,4 @@
 Shared by the standalone `shigella-typing` command and the Galaxy wrappers.
 """
 
-__version__ = "1.0.1"
+__version__ = "1.0.2"

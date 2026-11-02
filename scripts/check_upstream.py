@@ -46,7 +46,8 @@ VENDOR_DIR = "tool/shigella_typing/mykrobeshig"
 # Combined-report columns compared before and after an update
 CALLS = ("species_shigapass", "serotype_shigapass", "mykrobe_scheme",
          "mykrobe_species_call", "genotype", "genotype_name",
-         "genotype_confidence", "qrdr_mutations", "cipro_prediction", "warnings")
+         "genotype_confidence", "qrdr_mutations", "cipro_prediction", "mykrobe_susceptibility",
+         "warnings")
 
 
 # --- small helpers -----------------------------------------------------------

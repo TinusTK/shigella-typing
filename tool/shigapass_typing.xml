@@ -159,7 +159,7 @@ ${name}	${mykrobe.reads.input[$key]}
             </conditional>
             <output name="combined">
                 <assert_contents>
-                    <has_n_columns n="30"/>
+                    <has_n_columns n="31"/>
                     <has_n_lines n="4"/>
                     <has_line_matching expression="^ERR5952732\.fasta\.gz\t.*\tSF1-5\t1b\t.*\tflexneri\tS\. flexneri\t1\.2\.2\.5\.3\t.*\t\t1\.5\.0\t0\.13\.0\t20250902\t[0-9.]+$"/>
                     <has_line_matching expression="^ERR5976293\.fasta\.gz\t.*\tSS\t.*\tflexneri\t.*\tDiscordant: ShigaPass S\. sonnei, Mykrobe S\. flexneri - check\t.*"/>
@@ -173,7 +173,7 @@ ${name}	${mykrobe.reads.input[$key]}
             </output>
             <output name="mykrobe_report">
                 <assert_contents>
-                    <has_n_columns n="17"/>
+                    <has_n_columns n="18"/>
                     <has_line_matching expression="^ERR5976293\.fasta\.gz\tflexneri\t.*"/>
                 </assert_contents>
             </output>

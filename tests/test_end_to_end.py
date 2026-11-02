@@ -97,6 +97,8 @@ class TestEndToEnd(unittest.TestCase):
             self.assertEqual((row["mykrobe_scheme"], row["genotype"], row["qrdr_mutations"],
                               row["cipro_prediction"]), (scheme, genotype, qrdr, cipro))
             self.assertEqual(row["genotype_confidence"], "strong")
+            self.assertEqual(row["mykrobe_susceptibility"],
+                             {"sonnei": "quinolones: R", "flexneri": "ciprofloxacin: R"}[scheme])
 
     def test_mykrobe_single_end_and_manual_scheme(self):
         out = os.path.join(self.tmp, "my_se")

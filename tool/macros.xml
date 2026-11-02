@@ -1,7 +1,7 @@
 <macros>
     <!-- Versions must match upstream_versions.yml and environment.yml -->
-    <token name="@TOOL_VERSION@">1.0.1</token>
-    <token name="@VERSION_SUFFIX@">1</token>
+    <token name="@TOOL_VERSION@">1.0.2</token>
+    <token name="@VERSION_SUFFIX@">0</token>
     <token name="@PROFILE@">23.0</token>
     <token name="@SHIGAPASS_VERSION@">1.5.0</token>
     <token name="@MYKROBE_VERSION@">0.13.0</token>
@@ -113,6 +113,12 @@
 susceptibility testing (AST).** ``cipro_prediction`` is ``no QRDR mutations``,
 ``QRDR mutation(s): reduced susceptibility likely`` (1-2 mutations) or
 ``QRDR triple mutant: resistance likely`` (3 or more).
+``mykrobe_susceptibility`` is Mykrobe's own call as it writes it:
+``ciprofloxacin: R/S`` (*S. flexneri* panel) or ``quinolones: R/S``
+(*S. sonnei* panel). Mykrobe calls R for any one QRDR mutation. Only *gyrA*
+and *parC* point mutations are tested, not plasmid-mediated quinolone
+resistance genes (*qnr*, *aac(6')-Ib-cr*, *qepA*), so S means no QRDR
+mutation was found, not that the isolate is susceptible.
 ]]></token>
     <token name="@HELP_SCOPE@"><![CDATA[
 These tools are for *Shigella* only. Mykrobe genotyping covers *S. sonnei*

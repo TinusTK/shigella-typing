@@ -38,9 +38,13 @@ the assemblies and the reads and gives the same combined report.
   antimicrobial susceptibility testing (AST).** `cipro_prediction` is
   `no QRDR mutations`, `QRDR mutation(s): reduced susceptibility likely`
   (1-2 mutations in *gyrA* / *parC*) or `QRDR triple mutant: resistance
-  likely` (3 or more). The panels cover *gyrA* S83 / D87 and *parC* S80
-  only; plasmid-mediated quinolone resistance (*qnr*, *aac(6')-Ib-cr*) and
-  other resistance genes are not detected.
+  likely` (3 or more). `mykrobe_susceptibility` is Mykrobe's own call as
+  it writes it: `ciprofloxacin: R/S` (*S. flexneri* panel) or
+  `quinolones: R/S` (*S. sonnei* panel); Mykrobe calls R for any one QRDR
+  mutation. The panels cover *gyrA* S83 / D87 and *parC* S80
+  only; plasmid-mediated quinolone resistance (*qnr*, *aac(6')-Ib-cr*,
+  *qepA*) and other resistance genes are not detected, so S means no QRDR
+  mutation was found, not that the isolate is susceptible.
 - **Genotypes exist only for *S. sonnei* and *S. flexneri* serotypes 1-5.**
   *S. boydii*, *S. dysenteriae*, *S. flexneri* serotype 6 and EIEC get a
   species and serotype from ShigaPass but no Mykrobe genotype; the combined
@@ -188,7 +192,9 @@ call for these.
 QRDR mutations (`qrdr_mutations`, `num_qrdr`) are genotypic markers;
 `cipro_prediction` is `no QRDR mutations`, `QRDR mutation(s): reduced
 susceptibility likely` (1-2) or `QRDR triple mutant: resistance likely` (3+),
-and is not a replacement for AST. A warning is added when species coverage
+and is not a replacement for AST. `mykrobe_susceptibility` keeps Mykrobe's
+own call (`ciprofloxacin: R/S` or `quinolones: R/S`, R for any one QRDR
+mutation). A warning is added when species coverage
 is within 1 point of a threshold.
 
 Uses the bundled `panels/` (install with `pip install -e .` from a clone, or
@@ -260,6 +266,7 @@ reads, missing assembly and not-*Shigella* cases too, is
 | `qrdr_mutations` | none | none | - | none |
 | `num_qrdr` | 0 | 0 | - | 0 |
 | `cipro_prediction` | no QRDR mutations | no QRDR mutations | - | no QRDR mutations |
+| `mykrobe_susceptibility` | quinolones: S | ciprofloxacin: S | - | ciprofloxacin: S |
 | `species_coverage` | 95.196 | 88.459 | - | 88.459 |
 | `lowest_support_genotype_marker` | - | - | - | - |
 | `poorly_supported_markers` | - | - | - | - |

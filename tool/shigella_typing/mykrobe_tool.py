@@ -13,6 +13,7 @@ and its QRDR calls are ignored.
 QRDR mutations are read from the Mykrobe JSON here, from every drug entry:
 the flexneri panel files them under 'ciprofloxacin', the sonnei panel under
 'quinolones' (mykrobeshig reads only the former; see mykrobeshig/UPSTREAM.md).
+mykrobe_susceptibility keeps Mykrobe's own R/S call per drug as written there.
 
 Mykrobe always gets --panels_dir (bundled panels) and a private
 --skeleton_dir, so it never downloads anything or writes outside the work
@@ -33,13 +34,13 @@ from shigella_typing.utils import check_unique, last_line, log, run, write_tsv
 REPORT_COLUMNS = [
     "sample", "mykrobe_scheme", "mykrobe_species_call", "genotype", "genotype_name",
     "genotype_confidence", "qrdr_mutations", "num_qrdr", "cipro_prediction",
-    "species_coverage", "lowest_support_genotype_marker", "poorly_supported_markers",
+    "mykrobe_susceptibility", "species_coverage", "lowest_support_genotype_marker", "poorly_supported_markers",
     "additional_markers", "warnings", "mykrobe_version", "mykrobe_panel_version",
     "tool_version",
 ]
 
 # Columns shared with the combined report (mykrobe_scheme ... additional_markers).
-MYKROBE_COLUMNS = REPORT_COLUMNS[1:13]
+MYKROBE_COLUMNS = REPORT_COLUMNS[1:14]
 
 SCHEMES = {
     # scheme: (mykrobeshig species name, species coverage threshold)
@@ -96,6 +97,14 @@ def qrdr_calls(sample_json):
         if drug.get("predict") == "R":
             found.update(name.split("-")[0] for name in drug.get("called_by", {}))
     return sorted(found)
+
+
+def susceptibility(sample_json):
+    """Mykrobe's own call per drug, e.g. 'ciprofloxacin: R' (flexneri) or
+    'quinolones: S' (sonnei); '-' if the JSON has none."""
+    calls = [f"{drug}: {v.get('predict', '-')}"
+             for drug, v in sorted(sample_json.get("susceptibility", {}).items())]
+    return ";".join(calls) or "-"
 
 
 def cipro_prediction(n):
@@ -182,6 +191,7 @@ def decide(sample, results):
             qrdr_mutations=";".join(qrdr) or "none",
             num_qrdr=str(len(qrdr)),
             cipro_prediction=cipro_prediction(len(qrdr)),
+            mykrobe_susceptibility=susceptibility(js),
             species_coverage=msh["species_coverage"],
             lowest_support_genotype_marker=msh["lowest support for genotype marker"] or "-",
             poorly_supported_markers=msh["poorly supported markers"] or "-",

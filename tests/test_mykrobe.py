@@ -67,6 +67,15 @@ class TestQrdr(unittest.TestCase):
             "gyrA_S83F-TCG1AAA": {}, "parC_S80R-AGC2CGC": {}}}}}
         self.assertEqual(mt.qrdr_calls(js), ["gyrA_S83F", "parC_S80R"])
 
+    def test_susceptibility(self):
+        self.assertEqual(mt.susceptibility({}), "-")
+        self.assertEqual(mt.susceptibility({"susceptibility": {"ciprofloxacin": {"predict": "S"}}}),
+                         "ciprofloxacin: S")
+        js = mt.load_json(os.path.join(DATA, "mykrobe_json", "SRR8117834.sonnei.json"))
+        self.assertEqual(mt.susceptibility(js), "quinolones: R")
+        js = mt.load_json(os.path.join(DATA, "mykrobe_json", "SRR4192076.flexneri.json"))
+        self.assertEqual(mt.susceptibility(js), "ciprofloxacin: R")
+
     def test_cipro_prediction(self):
         self.assertEqual(mt.cipro_prediction(0), "no QRDR mutations")
         self.assertEqual(mt.cipro_prediction(1), "QRDR mutation(s): reduced susceptibility likely")
@@ -90,6 +99,7 @@ class TestDecide(unittest.TestCase):
         self.assertEqual(row["genotype_confidence"], "strong")
         self.assertEqual(row["qrdr_mutations"], "gyrA_D87G;gyrA_S83L;parC_S80I")
         self.assertEqual(row["num_qrdr"], "3")
+        self.assertEqual(row["mykrobe_susceptibility"], "quinolones: R")
         self.assertEqual(row["mykrobe_panel_version"], "20210201")
         self.assertEqual(row["warnings"], "")
 
@@ -97,6 +107,7 @@ class TestDecide(unittest.TestCase):
         row = mt.decide("SRR4192076", results_for("SRR4192076", self.tmp))
         self.assertEqual((row["mykrobe_scheme"], row["genotype"]), ("flexneri", "3.2.1.5.5.1"))
         self.assertEqual(row["genotype_name"], "-")
+        self.assertEqual(row["mykrobe_susceptibility"], "ciprofloxacin: R")
         self.assertEqual(row["mykrobe_panel_version"], "20250902")
 
     def test_e_coli_near_miss_warns(self):
@@ -105,6 +116,7 @@ class TestDecide(unittest.TestCase):
         self.assertEqual(row["mykrobe_species_call"], "Unknown E. coli/Shigella")
         self.assertEqual(row["genotype"], "-")
         self.assertEqual(row["qrdr_mutations"], "-")
+        self.assertEqual(row["mykrobe_susceptibility"], "-")
         self.assertIn("Not S. sonnei/S. flexneri", row["warnings"])
         self.assertIn("89.474 just below the sonnei threshold", row["warnings"])
         self.assertIn("85.048 just below the flexneri threshold", row["warnings"])

@@ -105,7 +105,7 @@ class TestCrossCheck(unittest.TestCase):
 
 class TestCombine(unittest.TestCase):
     def test_columns_match_draft_report(self):
-        self.assertEqual(len(combine.REPORT_COLUMNS), 30)
+        self.assertEqual(len(combine.REPORT_COLUMNS), 31)
         self.assertEqual(combine.REPORT_COLUMNS[:3], ["sample", "rfb", "rfb_hits"])
         self.assertEqual(combine.REPORT_COLUMNS[12:14], ["serotype_shigapass", "mykrobe_scheme"])
         self.assertEqual(combine.REPORT_COLUMNS[-5:], ["warnings", "shigapass_version",
@@ -149,6 +149,16 @@ class TestCombine(unittest.TestCase):
                 rows = list(csv.DictReader(fh, delimiter="\t"))
             self.assertEqual(list(rows[0]), combine.REPORT_COLUMNS)
             self.assertEqual([r["sample"] for r in rows], ["a", "b"])
+            # a Mykrobe report from 1.0.1 (no mykrobe_susceptibility) still combines
+            old = [c for c in mykrobe_tool.REPORT_COLUMNS if c != "mykrobe_susceptibility"]
+            write_tsv(my1, old, [my_row("a", "sonnei")])
+            res = subprocess.run([sys.executable, "-m", "shigella_typing.cli", "combine",
+                                  "--shigapass", sp, "--mykrobe", my1, "--outdir", tmp],
+                                 capture_output=True, text=True, env=dict(os.environ, PYTHONPATH=TOOL))
+            self.assertEqual(res.returncode, 0, res.stderr)
+            with open(os.path.join(tmp, "shigella_typing_report.tsv")) as fh:
+                rows = list(csv.DictReader(fh, delimiter="\t"))
+            self.assertEqual(rows[0]["mykrobe_susceptibility"], "-")
             # wrong file type gives a clear error
             res = subprocess.run([sys.executable, "-m", "shigella_typing.cli", "combine",
                                   "--shigapass", my1, "--mykrobe", my1, "--outdir", tmp],

@@ -72,8 +72,8 @@
             </conditional>
             <output name="report">
                 <assert_contents>
-                    <has_n_columns n="17"/>
-                    <has_line_matching expression="^SRR8117834\tsonnei\tS\. sonnei\t3\.6\.1\.1\.2\tCipR\.MSM5\tstrong\tgyrA_D87G;gyrA_S83L;parC_S80I\t3\tQRDR triple mutant: resistance likely\t95\.214\t.*"/>
+                    <has_n_columns n="18"/>
+                    <has_line_matching expression="^SRR8117834\tsonnei\tS\. sonnei\t3\.6\.1\.1\.2\tCipR\.MSM5\tstrong\tgyrA_D87G;gyrA_S83L;parC_S80I\t3\tQRDR triple mutant: resistance likely\tquinolones: R\t95\.214\t.*"/>
                 </assert_contents>
             </output>
         </test>
@@ -91,7 +91,7 @@
             <param name="raw_outputs" value="json,predictresults"/>
             <output name="report">
                 <assert_contents>
-                    <has_line_matching expression="^ERR047239\tflexneri\tS\. flexneri\t2\.1\.2\.7\t.*\tgyrA_S83L\t1\tQRDR mutation\(s\): reduced susceptibility likely\t.*"/>
+                    <has_line_matching expression="^ERR047239\tflexneri\tS\. flexneri\t2\.1\.2\.7\t.*\tgyrA_S83L\t1\tQRDR mutation\(s\): reduced susceptibility likely\tciprofloxacin: R\t.*"/>
                 </assert_contents>
             </output>
             <output_collection name="json" type="list" count="2">
@@ -180,7 +180,7 @@ A warning is added when species coverage is within 1 point of a threshold.
 
 sample, mykrobe_scheme, mykrobe_species_call, genotype, genotype_name,
 genotype_confidence, qrdr_mutations, num_qrdr, cipro_prediction,
-species_coverage, lowest_support_genotype_marker, poorly_supported_markers,
+mykrobe_susceptibility, species_coverage, lowest_support_genotype_marker, poorly_supported_markers,
 additional_markers,
 warnings, mykrobe_version, mykrobe_panel_version, tool_version.
 
