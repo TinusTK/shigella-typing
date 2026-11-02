@@ -262,7 +262,8 @@ the conda environment and are skipped without it).
 
 - Yassine I. *et al.* (2023) ShigaPass: an *in silico* tool predicting
   *Shigella* serotypes from whole-genome sequencing assemblies.
-  *Microb Genom*. doi:10.1099/mgen.0.000961
+  *Microb Genom*. doi:10.1099/mgen.0.000961 —
+  https://github.com/imanyass/ShigaPass
 - Hunt M. *et al.* (2019) Antibiotic resistance prediction for
   *Mycobacterium tuberculosis* from genome sequence data with Mykrobe.
   *Wellcome Open Res* 4:191. doi:10.12688/wellcomeopenres.15603.1
