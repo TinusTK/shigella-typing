@@ -10,6 +10,13 @@ public health use, from genome assemblies and reads:
   [mykrobeshig](https://github.com/ShigellaGenomics/mykrobeshig).
 - **Combine Shigella report** joins the two into one report.
 
+> **Prefer no command line?**
+> [Genomics Workflow Microbials (GWM)](https://github.com/TinusTK/GenomicsWorkflowMicrobials)
+> is a free desktop app for Windows, Mac and Linux with a point-and-click
+> interface. ShigaPass typing is built in, with the Mykrobe genotyping and
+> the combined report: choose a folder of reads, press Run and read the
+> results as tables. Nothing to install by hand, and no server needed: it all runs locally on your computer.
+
 Together they give:
 
 - **species and serotype** (*Shigella* or EIEC) with ShigaPass on the assembly
