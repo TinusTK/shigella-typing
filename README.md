@@ -27,7 +27,7 @@ Together they give:
 
 | Tool | Input | Output |
 |---|---|---|
-| ShigaPass typing | Assemblies (FASTA) | ShigaPass report (optionally the combined report) |
+| ShigaPass typing | Assemblies (FASTA), plus reads (FASTQ) for the combined report | ShigaPass report (optionally the combined report) |
 | Mykrobe Shigella genotyping | Reads (paired, single-end or ONT) | Mykrobe report |
 | Combine Shigella report | Reports from the two tools above | Combined report with cross-check warnings |
 
@@ -41,8 +41,17 @@ flowchart LR
     C --> O["Combined report<br/>with cross-check warnings"]
 ```
 
-Or in one step: *ShigaPass typing* with *Also run Mykrobe genotyping* takes
-the assemblies and the reads and gives the same combined report.
+Or in one step: *ShigaPass typing* with *Also run Mykrobe genotyping* set to
+*Yes* takes the assemblies (FASTA) and the reads (FASTQ) and gives the same
+combined report.
+
+```mermaid
+flowchart LR
+    R["Reads<br/>(list:paired collection)"] --> A["Your assembler<br/>(e.g. Shovill)"]
+    A -- "Assemblies (FASTA)" --> S["ShigaPass typing<br/>(Also run Mykrobe: Yes)"]
+    R -- "Reads (FASTQ)" --> S
+    S --> O["Combined report<br/>with cross-check warnings"]
+```
 
 The tools are for *Shigella* only. For *M. tuberculosis* use TB-Profiler;
 for other Mykrobe species use the IUC `mykrobe_predict` tool.
