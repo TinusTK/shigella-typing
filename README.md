@@ -4,8 +4,7 @@ I redesigned three tools to give a more thorough *Shigella* report for
 public health use, from genome assemblies and reads:
 
 - **ShigaPass typing** is redesigned from
-  [ShigaPass](https://github.com/imanyass/ShigaPass).
-- **Mykrobe Shigella genotyping** is redesigned from
+  [ShigaPass](https://github.com/imanyass/ShigaPass), that combines **Mykrobe Shigella genotyping**  which is also a redesigned from
   [Mykrobe](https://github.com/Mykrobe-tools/mykrobe) and
   [mykrobeshig](https://github.com/ShigellaGenomics/mykrobeshig).
 - **Combine Shigella report** joins the two into one report.
