@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.2+galaxy1 (2026-11-21)
+
+- Galaxy: all three tool pages now cite this repository, as BibTeX since it
+  has no DOI, ahead of ShigaPass, BLAST+, Mykrobe and the panels. Galaxy
+  renders the citations block as the Citations section and exports it as
+  BibTeX or RIS, so there was previously nothing to cite for the tool doing
+  the work; `CITATION.cff` already asked for the repository to be cited.
+- Galaxy: the help calls it the tool rather than the "wrapper source", since
+  this is a redesign and not a wrapper around someone else's pipeline, and
+  ends with a Source and documentation section.
+- No change to the tools, the panels, the vendored code or any result.
+
 ## 1.0.2 (2026-11-02)
 
 - New report column `mykrobe_susceptibility` (after `cipro_prediction`) in
