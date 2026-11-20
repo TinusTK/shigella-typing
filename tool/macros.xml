@@ -1,7 +1,7 @@
 <macros>
     <!-- Versions must match upstream_versions.yml and environment.yml -->
     <token name="@TOOL_VERSION@">1.0.2</token>
-    <token name="@VERSION_SUFFIX@">0</token>
+    <token name="@VERSION_SUFFIX@">1</token>
     <token name="@PROFILE@">23.0</token>
     <token name="@SHIGAPASS_VERSION@">1.5.0</token>
     <token name="@MYKROBE_VERSION@">0.13.0</token>
@@ -92,6 +92,19 @@
         </conditional>
     </xml>
 
+    <!-- This repository, cited first by every tool in it. It has no DOI, so
+         BibTeX, which Galaxy renders and exports alongside the DOIs. Matches
+         CITATION.cff, whose message already asks for the repository to be
+         cited as well as the tools it runs. -->
+    <xml name="citations_self">
+        <citation type="bibtex">@misc{shigella_typing,
+  author = {TinusTK},
+  title = {shigella-typing: Shigella serotyping, genotyping and QRDR typing},
+  year = {2026},
+  publisher = {GitHub},
+  url = {https://github.com/TinusTK/shigella-typing}
+}</citation>
+    </xml>
     <xml name="citations_shigapass">
         <citation type="doi">10.1099/mgen.0.000961</citation>
         <citation type="doi">10.1186/1471-2105-10-421</citation>
@@ -103,6 +116,7 @@
     </xml>
     <xml name="citations_all">
         <citations>
+            <expand macro="citations_self"/>
             <expand macro="citations_shigapass"/>
             <expand macro="citations_mykrobe"/>
         </citations>
@@ -135,7 +149,12 @@ ShigaPass @SHIGAPASS_VERSION@ (Yassine *et al.* 2023), BLAST+ (Camacho *et al.*
 *S. sonnei* 20210201 (Sonneityping, Hawkey *et al.* 2021) and *S. flexneri*
 20250902 (Flex-It, Hawkey *et al.* 2026) from Mykrobe-tools/mykrobe-data
 (MIT, bundled, never downloaded), and mykrobeshig (ShigellaGenomics, GPL-3.0,
-adapted from katholt/sonneityping; vendored unchanged). Wrapper source:
-https://github.com/TinusTK/shigella-typing
+adapted from katholt/sonneityping; vendored unchanged).
+
+**Source and documentation**
+
+https://github.com/TinusTK/shigella-typing, which explains every column, the
+calling rules and the validation. Please cite the tool and the software it
+runs (see Citations below).
 ]]></token>
 </macros>

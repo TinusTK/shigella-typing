@@ -191,6 +191,7 @@ The Mykrobe panels are bundled with the tool and never downloaded.
 @HELP_CREDITS@
     ]]></help>
     <citations>
+        <expand macro="citations_self"/>
         <expand macro="citations_mykrobe"/>
     </citations>
 </tool>
